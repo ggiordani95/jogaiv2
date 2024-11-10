@@ -17,7 +17,7 @@ interface LottieComponentProps {
   delay?: number;
 }
 
-const SliderLottieComponent: React.FC<LottieComponentProps> = ({
+const LottieSliderComponent: React.FC<LottieComponentProps> = ({
   width = 200,
   height = 200,
   loop = true,
@@ -90,4 +90,4 @@ const SliderLottieComponent: React.FC<LottieComponentProps> = ({
   );
 };
 
-export default SliderLottieComponent;
+export default LottieSliderComponent;

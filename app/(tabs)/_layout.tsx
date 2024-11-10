@@ -2,7 +2,7 @@ import { Tabs, usePathname } from "expo-router";
 import React from "react";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/styles/hooks/useColorScheme";
-import { bottomTabRoutes } from "@/routes/(tabs)/bottomTabRoutes";
+import { tabsRoutes } from "@/routes/(tabs)/tabsRoutes";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -13,6 +13,7 @@ export default function TabLayout() {
         ? Colors[colorScheme ?? "light"].tabIconSelected
         : Colors[colorScheme ?? "light"].tabIconDefault,
   });
+
   return (
     <Tabs
       screenOptions={{
@@ -24,7 +25,7 @@ export default function TabLayout() {
         headerShown: false,
       }}
     >
-      {bottomTabRoutes.map(({ name, label, icon: Icon }) => (
+      {tabsRoutes.map(({ name, label, icon: Icon }) => (
         <Tabs.Screen
           key={name}
           name={name}
@@ -41,6 +42,7 @@ export default function TabLayout() {
                 focused={focused}
               />
             ),
+            tabBarButton: name === "(modals)" ? () => null : undefined,
           }}
         />
       ))}

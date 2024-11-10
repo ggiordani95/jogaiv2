@@ -22,16 +22,16 @@ export const Colors: TColors = {
   },
   dark: {
     ...MainTheme,
-    text: Palette.gray100,
-    textSecondary: Palette.gray400,
+    text: Palette.white,
+    textSecondary: Palette.white,
     tabIconDefault: Palette.zinc700,
     action: Palette.blue500,
     background: Palette.black,
     tabBarBackground: Palette.black,
 
     // Background colors
-    bgContentPrimary: Palette.neutral800,
-    bgContentSecondary: Palette.neutral700,
+    bgContentPrimary: Palette.neutral900,
+    bgContentSecondary: Palette.neutral600,
   },
 };
 

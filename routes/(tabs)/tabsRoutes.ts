@@ -2,7 +2,7 @@ import { EditProfileIcon } from "@/components/navigation/EditProfileIcon";
 import { HomeIcon } from "@/components/navigation/HomeIcon";
 import { SchedulesIcon } from "@/components/navigation/SchedulesIcon";
 
-const bottomTabRoutes = [
+const tabsRoutes = [
   {
     name: "index",
     label: "Início",
@@ -20,4 +20,4 @@ const bottomTabRoutes = [
   },
 ];
 
-export { bottomTabRoutes };
+export { tabsRoutes };

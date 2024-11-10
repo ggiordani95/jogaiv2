@@ -1,29 +1,122 @@
-import { View, ViewProps } from "react-native";
+import { View } from "react-native";
 import React from "react";
 import { ScrollView } from "react-native-gesture-handler";
-import { ThemedText } from "./ThemedText";
 import { Spacing } from "@/constants/Spacing";
-import { useThemeColor } from "@/styles/hooks/useThemeColor";
 import { ThemedTouchable } from "./ThemedTouchable";
+import { ThemedText } from "./ThemedText";
+import { Image } from "react-native";
 
-export const ScrollList = () => {
+type PROPS = {
+  headerTitle?: string;
+};
+
+export const ScrollList = ({ headerTitle }: PROPS) => {
   return (
-    <ScrollView
-      horizontal
-      style={{ maxHeight: 48, marginVertical: Spacing.medium }}
-      showsHorizontalScrollIndicator={false}
-      contentContainerStyle={{
-        justifyContent: "center",
-        alignItems: "center",
-        marginLeft: 18,
-      }}
-    >
-      <ThemedTouchable onPress={() => ""} label={"Futebol Society"} />
-      <ThemedTouchable onPress={() => ""} label={"Futebol 11"} />
-      <ThemedTouchable onPress={() => ""} label={"Futebol 7"} />
-      <ThemedTouchable onPress={() => ""} label={"Volêi"} />
-      <ThemedTouchable onPress={() => ""} label={"Padel"} />
-      <ThemedTouchable onPress={() => ""} label={"Futebol Society"} />
-    </ScrollView>
+    <View style={{ marginVertical: 4 }}>
+      {headerTitle && (
+        <ThemedText variant="large" weight="medium" ml={Spacing.small}>
+          {headerTitle}
+        </ThemedText>
+      )}
+      <ScrollView
+        style={{ marginVertical: Spacing.small }}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          justifyContent: "center",
+          marginLeft: Spacing.small,
+        }}
+      >
+        <ThemedTouchable
+          onPress={() => ""}
+          label={"Futebol Society"}
+          image={
+            <Image
+              source={require("@/assets/images/tennis.png")}
+              style={{
+                width: 42,
+                height: 42,
+                borderRadius: 12,
+                marginLeft: 18,
+              }}
+            />
+          }
+        />
+        <ThemedTouchable
+          onPress={() => ""}
+          label={"Futebol 11"}
+          image={
+            <Image
+              source={require("@/assets/images/soccer.png")}
+              style={{
+                width: 42,
+                height: 42,
+                borderRadius: 12,
+                marginLeft: 18,
+              }}
+            />
+          }
+        />
+        <ThemedTouchable
+          onPress={() => ""}
+          label={"Futebol 7"}
+          image={
+            <Image
+              source={require("@/assets/images/soccer.png")}
+              style={{
+                width: 42,
+                height: 42,
+                borderRadius: 12,
+                marginLeft: 18,
+              }}
+            />
+          }
+        />
+        <ThemedTouchable
+          onPress={() => ""}
+          label={"Volêi"}
+          image={
+            <Image
+              source={require("@/assets/images/tennis.png")}
+              style={{
+                width: 42,
+                height: 42,
+                borderRadius: 12,
+                marginLeft: 18,
+              }}
+            />
+          }
+        />
+        <ThemedTouchable
+          onPress={() => ""}
+          label={"Padel"}
+          image={
+            <Image
+              source={require("@/assets/images/tennis.png")}
+              style={{
+                width: 42,
+                height: 42,
+                borderRadius: 12,
+                marginLeft: 18,
+              }}
+            />
+          }
+        />
+        <ThemedTouchable
+          onPress={() => ""}
+          label={"Basquete"}
+          image={
+            <Image
+              source={require("@/assets/images/basket.png")}
+              style={{
+                width: 42,
+                height: 42,
+                borderRadius: 12,
+                marginLeft: 18,
+              }}
+            />
+          }
+        />
+      </ScrollView>
+    </View>
   );
 };

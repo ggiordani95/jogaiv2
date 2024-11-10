@@ -29,7 +29,8 @@ type TSearchFilter = {
   headerComponent?: JSX.Element;
 } & TextInputProps;
 
-const SearchInputHeight = BoxSizes.medium;
+const SearchInputHeight = BoxSizes.large;
+const SpaceFromTop = 60;
 
 export default function SearchFilter({
   bgColorVariant,
@@ -64,6 +65,7 @@ export default function SearchFilter({
 
   return (
     <>
+      <View style={{ marginTop: SpaceFromTop }} />
       <SpacedView
         onLayout={(event) => {
           const { height } = event.nativeEvent.layout;
@@ -82,7 +84,7 @@ export default function SearchFilter({
           {
             paddingHorizontal: Spacing.small,
             position: searchFilterIsShown ? "absolute" : "relative",
-            top: searchFilterIsShown ? headerHeight + 20 : 0,
+            top: searchFilterIsShown ? SpaceFromTop + 10 : 0,
             flex: 1,
             elevation: 3,
             zIndex: 99,
@@ -102,7 +104,7 @@ export default function SearchFilter({
           {...rest}
         />
         {searchFilterIsShown && (
-          <TouchableOpacity onPress={() => ""}>
+          <TouchableOpacity onPress={() => handleClose()}>
             <ThemedText
               colorVariant="action"
               weight="regular"

@@ -2,8 +2,9 @@ export const Typography = {
   fontSizeXSmall: 10,
   fontSizeSmall: 12,
   fontSizeMedium: 16,
-  fontSizeLarge: 32,
-  fontSizeTitle: 40,
+  fontSizeRegular: 18,
+  fontSizeLarge: 24,
+  fontSizeTitle: 32,
 
   fontWeightLight: "300" as const,
   fontWeightRegular: "400" as const,

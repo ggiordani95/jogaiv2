@@ -10,15 +10,13 @@ import { useEffect } from "react";
 import "react-native-reanimated";
 import { useColorScheme } from "@/styles/hooks/useColorScheme";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { InitialLayout } from "./initial";
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-
   const [loaded] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    SpaceMono: require("../assets/fonts/DMSans.ttf"),
   });
 
   useEffect(() => {
@@ -33,10 +31,7 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
+      <InitialLayout />
     </GestureHandlerRootView>
   );
 }

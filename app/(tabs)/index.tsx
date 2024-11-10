@@ -1,33 +1,48 @@
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, TouchableOpacity } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import SearchFilter from "@/components/SearchFilter";
 import { ScrollList } from "@/components/ScrollList";
-import LottieComponent from "@/components/LottieComponent";
-import Sports from "@/assets/lotties/sports.json";
-import Calendar from "@/assets/lotties/calendar.json";
-import SliderLottieComponent from "@/components/SliderLottieComponent";
 
 import { Section } from "@/components/Section";
+import { FontAwesome6 } from "@expo/vector-icons";
+import { useThemeColor } from "@/styles/hooks/useThemeColor";
+import { useEffect } from "react";
+import { useRouter } from "expo-router";
 
 export default function HomeScreen() {
+  const textColor = useThemeColor({}, "text");
+  const router = useRouter();
+  const isAuthenticated = false;
+  useEffect(() => {
+    if (isAuthenticated) return;
+    setTimeout(() => {
+      router.push("/(modals)/login");
+    }, 1000);
+  }, []);
   return (
     <Section>
       <ScrollView>
-        <View style={{ marginTop: 60 }}></View>
         <SearchFilter
           bgColorVariant="bgContentPrimary"
           headerComponent={
-            <>
-              <ThemedText variant="large" weight="bold">
-                Buscar
+            <TouchableOpacity
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginRight: 16,
+                gap: 8,
+              }}
+              onPress={() => router.push("/(modals)/login")}
+            >
+              <ThemedText variant="title" weight="bold">
+                Login
               </ThemedText>
-            </>
+              <FontAwesome6 name="chevron-down" size={18} color={textColor} />
+            </TouchableOpacity>
           }
         />
-
-        <ScrollList />
+        <ScrollList headerTitle="Escolha o esporte" />
       </ScrollView>
-      {/* <SliderLottieComponent source={Sports} source2={Calendar} /> */}
     </Section>
   );
 }
