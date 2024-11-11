@@ -1,5 +1,6 @@
 import {
   Alert,
+  ScrollView,
   StyleSheet,
   Text,
   Touchable,
@@ -9,6 +10,7 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { useEffect, useState } from "react";
 import { ThemedText } from "./ThemedText";
+import { Feather } from "@expo/vector-icons";
 
 const getAllYearCalendar = () => {
   const [calendar, setCalendar] = useState<
@@ -80,7 +82,6 @@ const getAllYearCalendar = () => {
   };
 
   function getMonth(index: number) {
-    console.log(calendar[index].days);
     return (
       calendar[index]?.days?.map((day) => ({
         month: day.day.split("-")[1],
@@ -110,12 +111,19 @@ const getAllYearCalendar = () => {
     generateCalendar(currentMonth, currentYear);
   }, []);
 
+  const changeIndex = (index: number) => {
+    if (index > 12 || index < 0) return;
+    setCurrentMonthIndex(index);
+  };
+
   return {
     getMonth,
+    index: currenthMonthIndex,
     getNumberOfDays,
     getWeekDays,
     getCurrentMonthYear,
     getDayValue,
+    changeIndex,
   };
 };
 
@@ -150,8 +158,14 @@ const weekDaysBrazilian = {
 } as const;
 
 export const Calendar = () => {
-  const { getNumberOfDays, getWeekDays, getCurrentMonthYear, getDayValue } =
-    getAllYearCalendar();
+  const {
+    getNumberOfDays,
+    getWeekDays,
+    getCurrentMonthYear,
+    getDayValue,
+    index,
+    changeIndex,
+  } = getAllYearCalendar();
   const { dayRows } = getDaysRows(getNumberOfDays());
 
   return (
@@ -163,7 +177,20 @@ export const Calendar = () => {
         <ThemedText variant="medium" weight="semibold">
           {getCurrentMonthYear().month}
         </ThemedText>
+        <View style={{ flexDirection: "row" }}>
+          <TouchableOpacity onPress={() => changeIndex(index - 1)}>
+            <ThemedText>
+              <Feather name="chevron-left" size={24} color="white" />
+            </ThemedText>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => changeIndex(index + 1)}>
+            <ThemedText>
+              <Feather name="chevron-right" size={24} color="white" />
+            </ThemedText>
+          </TouchableOpacity>
+        </View>
       </View>
+
       <View style={styles.row}>
         {getWeekDays().map((day, index) => (
           <View key={index} style={[styles.box]}>
@@ -171,48 +198,54 @@ export const Calendar = () => {
           </View>
         ))}
       </View>
-      {dayRows.map((row, rowIndex) => (
-        <View key={rowIndex} style={styles.row}>
-          {row.map((day, index) => (
-            <View
-              key={index}
-              style={[
-                styles.box,
-                styles.border,
-                rowIndex == 0 && index < 8 && { borderTopWidth: 1 },
-                index == 0 && { borderLeftWidth: 0 },
-                index == row.length - 1 &&
-                  row.length % 7 === 1 && {
-                    borderRightWidth: 0,
-                  },
-              ]}
-            >
-              <DayLabel
-                day={day.toString()}
-                onPress={() => {
-                  const value = getDayValue(day);
-                  console.log(value);
-                }}
-              />
-            </View>
-          ))}
-          {Array.from({ length: 7 - row.length }).map((_, index) => (
-            <View
-              key={index}
-              style={[
-                styles.box,
-                styles.border,
-                {
-                  borderLeftColor: index == 0 ? "#2e2e2e" : "transparent",
-                  borderRightColor: "transparent",
-                  borderTopColor: "transparent",
-                  borderBottomColor: "transparent",
-                },
-              ]}
-            ></View>
-          ))}
-        </View>
-      ))}
+      <View style={{ flexDirection: "row", overflow: "hidden", width: "100%" }}>
+        {Array.from({ length: 12 }, (_, index) => (
+          <View key={index} style={{ width: "100%" }}>
+            {dayRows.map((row, rowIndex) => (
+              <View key={rowIndex} style={styles.row}>
+                {row.map((day, index) => (
+                  <View
+                    key={index}
+                    style={[
+                      styles.box,
+                      styles.border,
+                      rowIndex == 0 && index < 8 && { borderTopWidth: 1 },
+                      index == 0 && { borderLeftWidth: 0 },
+                      index == row.length - 1 &&
+                        row.length % 7 === 1 && {
+                          borderRightWidth: 0,
+                        },
+                    ]}
+                  >
+                    <DayLabel
+                      day={day.toString()}
+                      onPress={() => {
+                        const value = getDayValue(day);
+                        console.log(value);
+                      }}
+                    />
+                  </View>
+                ))}
+                {Array.from({ length: 7 - row.length }).map((_, index) => (
+                  <View
+                    key={index}
+                    style={[
+                      styles.box,
+                      styles.border,
+                      {
+                        borderLeftColor: index == 0 ? "#2e2e2e" : "transparent",
+                        borderRightColor: "transparent",
+                        borderTopColor: "transparent",
+                        borderBottomColor: "transparent",
+                      },
+                    ]}
+                  ></View>
+                ))}
+              </View>
+            ))}
+          </View>
+        ))}
+      </View>
     </LinearGradient>
   );
 };
@@ -265,6 +298,36 @@ const styles = StyleSheet.create({
   monthYear: {
     marginTop: 32,
     width: "100%",
-    marginLeft: 32,
+    paddingHorizontal: 16,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  allMonthsContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+  },
+  monthContainer: {
+    width: "30%",
+    margin: 5,
+    padding: 10,
+    backgroundColor: "#333",
+    borderRadius: 5,
+  },
+  monthTitle: {
+    fontSize: 16,
+    color: "#fff",
+    textAlign: "center",
+    marginBottom: 10,
+  },
+  daysContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+  },
+  dayText: {
+    fontSize: 12,
+    color: "#fff",
+    margin: 2,
   },
 });
