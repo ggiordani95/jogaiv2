@@ -20,7 +20,7 @@ type TColorVariant =
 interface TextProps extends RNTextProps {
   variant?: "small" | "medium" | "regular" | "large" | "title";
   colorVariant?: TColorVariant;
-  weight?: "light" | "regular" | "medium" | "bold";
+  weight?: "light" | "regular" | "medium" | "semibold" | "bold";
   ml?: number;
   mr?: number;
   mt?: number;

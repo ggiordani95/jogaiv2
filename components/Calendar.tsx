@@ -1,6 +1,14 @@
-import { StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  StyleSheet,
+  Text,
+  Touchable,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useEffect, useState } from "react";
+import { ThemedText } from "./ThemedText";
 
 const getAllYearCalendar = () => {
   const [calendar, setCalendar] = useState<
@@ -9,31 +17,45 @@ const getAllYearCalendar = () => {
       days: { day: string; weekDay: string; date: Date }[];
     }[]
   >([]);
-  const [rows, setRows] = useState<string[]>([]);
+  const [currenthMonthIndex, setCurrentMonthIndex] = useState(0);
 
   const daysInMonth = (month: number, year: number) => {
     return new Date(year, month, 0).getDate();
   };
 
+  const getWeekDays = () => {
+    return (
+      calendar[currenthMonthIndex]?.days
+        ?.filter((day, index) => index <= 6)
+        .map((day) => day.weekDay) || []
+    );
+  };
+
+  const getCurrentMonthYear = () => {
+    return {
+      month: calendar[currenthMonthIndex]?.monthYear || "",
+    };
+  };
+
   const generateCalendar = (startMonth: number, startYear: number) => {
     const monthNames = [
       "Jan",
-      "Feb",
+      "Fev",
       "Mar",
-      "Apr",
-      "May",
+      "Abr",
+      "Mai",
       "Jun",
       "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
+      "Ago",
+      "Set",
+      "Out",
       "Nov",
-      "Dec",
+      "Dez",
     ];
 
     const newCalendar = [];
 
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < 13; i++) {
       const totalMonths = startMonth - 1 + i;
       const year = startYear + Math.floor(totalMonths / 12);
       const monthIndex = totalMonths % 12;
@@ -57,32 +79,28 @@ const getAllYearCalendar = () => {
     setCalendar(newCalendar);
   };
 
-  function returnMonthByIndex(index: number) {
-    return calendar[index]?.days?.map((day) => ({
-      month: day.day.split("-")[1],
-      day:
-        day.day.split("-")[2].substring(0, 1) === "0"
-          ? day.day.split("-")[2].substring(1, 2)
-          : day.day.split("-")[2],
-      weekDay: day.weekDay,
-      year: day.day.split("-")[0],
-    }));
+  function getMonth(index: number) {
+    console.log(calendar[index].days);
+    return (
+      calendar[index]?.days?.map((day) => ({
+        month: day.day.split("-")[1],
+        day:
+          day.day.split("-")[2].substring(0, 1) === "0"
+            ? day.day.split("-")[2].substring(1, 2)
+            : day.day.split("-")[2],
+        weekDay: day.weekDay,
+        year: day.day.split("-")[0],
+      })) || []
+    );
   }
 
-  const rowsPush = () => {
-    const rowsArr = [];
-    for (
-      let i = 0;
-      i < returnMonthByIndex(0).map((day: any) => day.day).length;
-      i += 7
-    ) {
-      rowsArr.push(
-        returnMonthByIndex(0)
-          .map((day) => day.day)
-          .slice(i, i + 7)
-      );
-    }
-    setRows(rowsArr[0]);
+  const getNumberOfDays = () => {
+    const numberOfDays = getMonth(currenthMonthIndex);
+    return numberOfDays.length;
+  };
+
+  const getDayValue = (day: number) => {
+    return getMonth(currenthMonthIndex)[day - 1];
   };
 
   useEffect(() => {
@@ -90,49 +108,72 @@ const getAllYearCalendar = () => {
     const currentMonth = currentDate.getMonth() + 1;
     const currentYear = currentDate.getFullYear();
     generateCalendar(currentMonth, currentYear);
-    rowsPush();
   }, []);
 
-  return { calendar, returnMonthByIndex, rows };
+  return {
+    getMonth,
+    getNumberOfDays,
+    getWeekDays,
+    getCurrentMonthYear,
+    getDayValue,
+  };
 };
 
+const getDaysRows = (numberOfDays: number) => {
+  const days = Array.from({ length: numberOfDays }, (_, index) => index + 1);
+  const rows: number[][] = [];
+  for (let i = 0; i < days.length; i += 7) {
+    rows.push(days.slice(i, i + 7));
+  }
+  return { dayRows: rows };
+};
+
+enum WeekDays {
+  Sunday = "Sunday",
+  Monday = "Monday",
+  Tuesday = "Tuesday",
+  Wednesday = "Wednesday",
+  Thursday = "Thursday",
+  Friday = "Friday",
+  Saturday = "Saturday",
+}
+type TWeekDays = keyof typeof WeekDays;
+
+const weekDaysBrazilian = {
+  [WeekDays.Sunday]: "Dom",
+  [WeekDays.Monday]: "Seg",
+  [WeekDays.Tuesday]: "Ter",
+  [WeekDays.Wednesday]: "Qua",
+  [WeekDays.Thursday]: "Qui",
+  [WeekDays.Friday]: "Sex",
+  [WeekDays.Saturday]: "Sáb",
+} as const;
+
 export const Calendar = () => {
-  const days = Array.from({ length: 30 }, (_, index) => `${index + 1}`);
+  const { getNumberOfDays, getWeekDays, getCurrentMonthYear, getDayValue } =
+    getAllYearCalendar();
+  const { dayRows } = getDaysRows(getNumberOfDays());
 
-  const { calendar, rows } = getAllYearCalendar();
-
-  console.log(rows);
   return (
     <LinearGradient
       colors={["rgb(32, 32, 32)", "rgb(12, 12, 12)", "rgb(8, 8, 8)", "black"]}
       style={styles.container}
     >
-      <View style={styles.row}>
-        <View style={[styles.box]}>
-          <DayLabel day={"Seg"} />
-        </View>
-        <View style={[styles.box]}>
-          <DayLabel day={"Ter"} />
-        </View>
-        <View style={[styles.box]}>
-          <DayLabel day={"Qua"} />
-        </View>
-        <View style={[styles.box]}>
-          <DayLabel day={"Qui"} />
-        </View>
-        <View style={[styles.box]}>
-          <DayLabel day={"Sex"} />
-        </View>
-        <View style={[styles.box]}>
-          <DayLabel day={"Sáb"} />
-        </View>
-        <View style={[styles.box]}>
-          <DayLabel day={"Dom"} />
-        </View>
+      <View style={styles.monthYear}>
+        <ThemedText variant="medium" weight="semibold">
+          {getCurrentMonthYear().month}
+        </ThemedText>
       </View>
-      {rows.map((row, rowIndex) => (
+      <View style={styles.row}>
+        {getWeekDays().map((day, index) => (
+          <View key={index} style={[styles.box]}>
+            <DayLabel day={weekDaysBrazilian[day as WeekDays]} />
+          </View>
+        ))}
+      </View>
+      {dayRows.map((row, rowIndex) => (
         <View key={rowIndex} style={styles.row}>
-          {/* {row.map((day, index) => (
+          {row.map((day, index) => (
             <View
               key={index}
               style={[
@@ -141,48 +182,61 @@ export const Calendar = () => {
                 rowIndex == 0 && index < 8 && { borderTopWidth: 1 },
                 index == 0 && { borderLeftWidth: 0 },
                 index == row.length - 1 &&
-                  row.length % 7 === 1 && { borderRightWidth: 0 },
+                  row.length % 7 === 1 && {
+                    borderRightWidth: 0,
+                  },
               ]}
             >
-              <DayLabel day={day} />
+              <DayLabel
+                day={day.toString()}
+                onPress={() => {
+                  const value = getDayValue(day);
+                  console.log(value);
+                }}
+              />
             </View>
-          ))} */}
-          {
-            // Add empty boxes to fill the row
-            Array.from({ length: 7 - row.length }).map((_, index) => (
-              <View
-                key={index}
-                style={[
-                  styles.box,
-                  styles.border,
-                  {
-                    borderLeftColor: index == 0 ? "#2e2e2e" : "transparent",
-                    borderRightColor: "transparent",
-                    borderTopColor: "transparent",
-                    borderBottomColor: "transparent",
-                  },
-                ]}
-              ></View>
-            ))
-          }
+          ))}
+          {Array.from({ length: 7 - row.length }).map((_, index) => (
+            <View
+              key={index}
+              style={[
+                styles.box,
+                styles.border,
+                {
+                  borderLeftColor: index == 0 ? "#2e2e2e" : "transparent",
+                  borderRightColor: "transparent",
+                  borderTopColor: "transparent",
+                  borderBottomColor: "transparent",
+                },
+              ]}
+            ></View>
+          ))}
         </View>
       ))}
     </LinearGradient>
   );
 };
 
-const DayLabel = ({ day }: { day: string }) => {
+const DayLabel = ({
+  day,
+  onPress,
+}: {
+  day: TWeekDays | string;
+  onPress?: () => void;
+}) => {
   return (
-    <Text
-      style={{
-        color: "white",
-        fontSize: 14,
-        fontWeight: "bold",
-        textAlign: "center",
-      }}
-    >
-      {day}
-    </Text>
+    <TouchableOpacity onPress={onPress}>
+      <Text
+        style={{
+          color: "white",
+          fontSize: 14,
+          fontWeight: "bold",
+          textAlign: "center",
+        }}
+      >
+        {day}
+      </Text>
+    </TouchableOpacity>
   );
 };
 
@@ -207,5 +261,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderTopWidth: 0,
     borderColor: "#2e2e2e",
+  },
+  monthYear: {
+    marginTop: 32,
+    width: "100%",
+    marginLeft: 32,
   },
 });

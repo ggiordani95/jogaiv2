@@ -9,9 +9,9 @@ export const Typography = {
   fontWeightLight: "300" as const,
   fontWeightRegular: "400" as const,
   fontWeightMedium: "500" as const,
-  fontWeightSemiBold: "600" as const,
+  fontWeightSemibold: "600" as const,
   fontWeightBold: "700" as const,
-  fontWeightExtraBold: "800" as const,
+  fontWeightExtrabold: "800" as const,
 
   lineHeightXSmall: 14,
   lineHeightSmall: 18,
