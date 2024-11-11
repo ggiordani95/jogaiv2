@@ -34,8 +34,8 @@ export default function HomeScreen() {
               }}
               onPress={() => router.push("/(modals)/login")}
             >
-              <ThemedText variant="title" weight="bold">
-                Login
+              <ThemedText variant="large" weight="bold">
+                Calendário
               </ThemedText>
               <FontAwesome6 name="chevron-down" size={18} color={textColor} />
             </TouchableOpacity>

@@ -12,9 +12,9 @@ type PROPS = {
 
 export const ScrollList = ({ headerTitle }: PROPS) => {
   return (
-    <View style={{ marginVertical: 4 }}>
+    <View style={{ marginVertical: 4, marginTop: 20 }}>
       {headerTitle && (
-        <ThemedText variant="large" weight="medium" ml={Spacing.small}>
+        <ThemedText variant="large" weight="bold" ml={Spacing.small}>
           {headerTitle}
         </ThemedText>
       )}

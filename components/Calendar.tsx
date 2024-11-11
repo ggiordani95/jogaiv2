@@ -147,7 +147,7 @@ enum WeekDays {
 }
 type TWeekDays = keyof typeof WeekDays;
 
-const weekDaysBrazilian = {
+const weekDaysPort = {
   [WeekDays.Sunday]: "Dom",
   [WeekDays.Monday]: "Seg",
   [WeekDays.Tuesday]: "Ter",
@@ -194,7 +194,7 @@ export const Calendar = () => {
       <View style={styles.row}>
         {getWeekDays().map((day, index) => (
           <View key={index} style={[styles.box]}>
-            <DayLabel day={weekDaysBrazilian[day as WeekDays]} />
+            <DayLabel day={weekDaysPort[day as WeekDays]} />
           </View>
         ))}
       </View>
