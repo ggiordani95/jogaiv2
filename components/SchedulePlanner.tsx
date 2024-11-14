@@ -1,8 +1,9 @@
-import { View, StyleSheet, useWindowDimensions } from "react-native";
+import { View, StyleSheet, useWindowDimensions, FlatList } from "react-native";
 import { ThemedText } from "./ThemedText";
 import { ScrollView } from "react-native-gesture-handler";
 import { useState, useRef } from "react";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import Animated from "react-native-reanimated";
 
 const Hour = ({ hour }: { hour: number }) => {
   return (
@@ -223,68 +224,86 @@ const PlanGroup = ({
   );
 };
 
+const PlanColumns = ({
+  plannerHours,
+  initialColumnsPositionX,
+  width,
+  activeColumn,
+}: {
+  plannerHours: THour[];
+  initialColumnsPositionX: number;
+  width: number;
+  activeColumn: number;
+}) => {
+  return (
+    <>
+      {plannerHours.map((hour: THour, index: number) => {
+        return (
+          <View
+            key={index}
+            style={[
+              styles.boxContainer,
+              {
+                left: initialColumnsPositionX,
+                top: COLUMN_HEIGHT * index + 10,
+                width: width - 40,
+                height: COLUMN_HEIGHT,
+                borderWidth: 2,
+                borderStyle: "solid",
+                borderColor: activeColumn == index ? "#6a7da1" : "transparent",
+              },
+            ]}
+          />
+        );
+      })}
+    </>
+  );
+};
+
 export const SchedulePlanner = () => {
   const refs = useRef<(View | null)[]>([]);
 
   const { plannerHours, horizontalPlans } = usePlannerHandler();
 
   const [initialColumnsPositionX, setInitialColumnsPositionX] = useState(0);
+  const [activeColumn, setActiveColumn] = useState(0);
 
   const width = useWindowDimensions().width;
 
-  const hasHorizontalElementWidth = width / 3 - initialColumnsPositionX + 20;
-
-  //   useLayoutEffect(() => {
-  //     let isToReturn = null;
-  //     for (let i = horizontalPlans[0].from; i < horizontalPlans[0].to; i++) {
-  //       if (!refs.current[i]) {
-  //         isToReturn = true;
-  //         break;
-  //       }
-  //       refs.current[i]?.measure((x, y, width, height, pageX, pageY) => {
-  //         // console.log(`Altura do elemento refs.current[${i}]:`, height);
-  //         // console.log("Outras dimensões:", { x, y, width, pageX, pageY });
-  //         setHorizontalStyling({ ...horizontalStyling, [i]: pageY });
-  //       });
-  //     }
-  //     if (isToReturn) return;
-  //   }, [refs, horizontalPlans]);
-
   const initialIndex = 6;
+
+  const gesture = useRef(
+    Gesture.Pan()
+      .onChange((event) => {
+        const columnIndex = Number(
+          Math.round(event.translationY / COLUMN_HEIGHT)
+            .toString()
+            .padStart(1, "0")
+        );
+
+        // Only update if the column index has changed
+        if (activeColumn !== columnIndex) {
+          setActiveColumn(columnIndex);
+        }
+      })
+      .runOnJS(true)
+  );
 
   return (
     <ScrollView>
-      {horizontalPlans.map((horizontal, index) => {
-        const from = horizontal.from;
-        const to = horizontal.to;
-        return (
-          <View
-            key={index}
-            onLayout={(event) => {
-              const layout = event.nativeEvent.layout;
-              //   console.log("Altura do elemento:", layout.height);
-            }}
-            style={[
-              {
-                height: (to - from) * COLUMN_HEIGHT - 3,
-                width: hasHorizontalElementWidth,
-                backgroundColor: horizontal.color,
-                top: (from - initialIndex) * COLUMN_HEIGHT + 11,
-                left: initialColumnsPositionX,
-              },
-              styles.horizontal,
-            ]}
-          >
-            <ThemedText>{horizontal.title}</ThemedText>
-          </View>
-        );
-      })}
+      <GestureDetector gesture={gesture.current}>
+        <PlanColumns
+          plannerHours={plannerHours}
+          initialColumnsPositionX={initialColumnsPositionX}
+          width={width}
+          activeColumn={activeColumn}
+        />
+      </GestureDetector>
       {plannerHours.map((hour: THour, index: number) => {
         const hasHorizontal = horizontalPlans.find(
           (horizontal) =>
             horizontal.to > hour.hour && horizontal.from <= hour.hour
         );
-
         return (
           <View
             key={index}
@@ -298,47 +317,11 @@ export const SchedulePlanner = () => {
               style={styles.horizontalLine}
               onLayout={(event) => {
                 const positionX = event.nativeEvent.layout.x;
+
                 setInitialColumnsPositionX(positionX);
               }}
             />
             <Hour hour={hour.hour} />
-
-            {hour?.plan?.length > 1 && (
-              <View style={styles.boxContainer}>
-                {hasHorizontal && (
-                  <View
-                    style={{
-                      width: hasHorizontalElementWidth,
-                      height: 40,
-                      marginRight: 3,
-                    }}
-                  />
-                )}
-
-                <View
-                  style={{
-                    height: COLUMN_HEIGHT,
-                    flex: 1,
-                  }}
-                >
-                  {hour.plan.map((planGroup, groupIndex) => {
-                    return (
-                      <View
-                        style={{ flex: 1, flexDirection: "column" }}
-                        key={groupIndex}
-                      >
-                        <PlanGroup
-                          planGroup={planGroup}
-                          groupIndex={groupIndex}
-                          hasHorizontal={!!hasHorizontal}
-                          initialColumnsPositionX={initialColumnsPositionX}
-                        />
-                      </View>
-                    );
-                  })}
-                </View>
-              </View>
-            )}
           </View>
         );
       })}
@@ -375,12 +358,6 @@ const styles = StyleSheet.create({
   },
   boxContainer: {
     position: "absolute",
-    height: "100%",
-    width: "100%",
-    marginTop: "3%",
-    left: 50,
-    display: "flex",
-    flexDirection: "row",
   },
   box: {
     borderRadius: 6,
