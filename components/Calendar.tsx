@@ -11,6 +11,13 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useEffect, useState } from "react";
 import { ThemedText } from "./ThemedText";
 import { Feather } from "@expo/vector-icons";
+import Animated, {
+  Easing,
+  SharedValue,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 
 const getAllYearCalendar = () => {
   const [calendar, setCalendar] = useState<
@@ -111,10 +118,34 @@ const getAllYearCalendar = () => {
     generateCalendar(currentMonth, currentYear);
   }, []);
 
+  const getDaysWithMonth = (numberOfDays: number) => {
+    const days = Array.from({ length: numberOfDays }, (_, index) => index + 1);
+    const daysWithMonth = days.map((day) => ({
+      day,
+      month: currenthMonthIndex.toString(),
+    }));
+    const rows: { day: number; month: string }[][] = [];
+    for (let i = 0; i < daysWithMonth.length; i += 7) {
+      rows.push(daysWithMonth.slice(i, i + 7));
+    }
+    return { dayRows: rows };
+  };
+
   const changeIndex = (index: number) => {
     if (index > 12 || index < 0) return;
     setCurrentMonthIndex(index);
   };
+
+  const getDaysRows = (numberOfDays: number) => {
+    const days = Array.from({ length: numberOfDays }, (_, index) => index + 1);
+    const rows: number[][] = [];
+    for (let i = 0; i < days.length; i += 7) {
+      rows.push(days.slice(i, i + 7));
+    }
+    return { dayRows: rows };
+  };
+
+  const { dayRows } = getDaysRows(getNumberOfDays());
 
   return {
     getMonth,
@@ -124,16 +155,8 @@ const getAllYearCalendar = () => {
     getCurrentMonthYear,
     getDayValue,
     changeIndex,
+    dayRows,
   };
-};
-
-const getDaysRows = (numberOfDays: number) => {
-  const days = Array.from({ length: numberOfDays }, (_, index) => index + 1);
-  const rows: number[][] = [];
-  for (let i = 0; i < days.length; i += 7) {
-    rows.push(days.slice(i, i + 7));
-  }
-  return { dayRows: rows };
 };
 
 enum WeekDays {
@@ -159,33 +182,131 @@ const weekDaysPort = {
 
 export const Calendar = () => {
   const {
-    getNumberOfDays,
     getWeekDays,
     getCurrentMonthYear,
     getDayValue,
-    index,
+    index: currentMonthIndex,
     changeIndex,
+    dayRows,
   } = getAllYearCalendar();
-  const { dayRows } = getDaysRows(getNumberOfDays());
+
+  type TDay = {
+    month: string;
+    day: string;
+    weekDay: string;
+    year: string;
+  };
+
+  const [selectedDay, setSelectedDay] = useState<{
+    day: TDay;
+    currentSelectedIndex: number;
+  } | null>(null);
+  const calendarTranslateY = useSharedValue(0);
+  const calendarOpacity = useSharedValue(1);
+
+  const monthYearTranslateY = useSharedValue(0);
+  const monthYearOpacity = useSharedValue(1);
+
+  const calendarAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateY: calendarTranslateY.value }],
+      opacity: calendarOpacity.value,
+    };
+  });
+
+  const monthYearAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateY: monthYearTranslateY.value }],
+      opacity: monthYearOpacity.value,
+    };
+  });
+
+  const fadeFromTop = ({
+    translateY,
+    opacity,
+  }: {
+    translateY: SharedValue<number>;
+    opacity: SharedValue<number>;
+  }) => {
+    translateY.value = -30;
+    opacity.value = 0;
+    translateY.value = withTiming(0, {
+      duration: 500,
+      easing: Easing.out(Easing.exp),
+    });
+    opacity.value = withTiming(1, {
+      duration: 400,
+      easing: Easing.out(Easing.exp),
+    });
+  };
+
+  const fadeFromBottom = ({
+    translateY,
+    opacity,
+  }: {
+    translateY: SharedValue<number>;
+    opacity: SharedValue<number>;
+  }) => {
+    translateY.value = 50;
+    opacity.value = 0;
+    translateY.value = withTiming(0, {
+      duration: 500,
+      easing: Easing.out(Easing.exp),
+    });
+    opacity.value = withTiming(1, {
+      duration: 500,
+      easing: Easing.out(Easing.exp),
+    });
+  };
 
   return (
-    <LinearGradient
-      colors={["rgb(32, 32, 32)", "rgb(12, 12, 12)", "rgb(8, 8, 8)", "black"]}
-      style={styles.container}
-    >
+    <View style={styles.container}>
       <View style={styles.monthYear}>
-        <ThemedText variant="medium" weight="semibold">
-          {getCurrentMonthYear().month}
-        </ThemedText>
+        <Animated.View style={monthYearAnimatedStyle}>
+          <ThemedText variant="medium" weight="semibold">
+            {getCurrentMonthYear().month}
+          </ThemedText>
+        </Animated.View>
+
         <View style={{ flexDirection: "row" }}>
-          <TouchableOpacity onPress={() => changeIndex(index - 1)}>
+          <TouchableOpacity
+            disabled={currentMonthIndex < 1}
+            onPress={() => {
+              fadeFromBottom({
+                translateY: calendarTranslateY,
+                opacity: calendarOpacity,
+              });
+              changeIndex(currentMonthIndex - 1);
+            }}
+          >
             <ThemedText>
-              <Feather name="chevron-left" size={24} color="white" />
+              <Feather
+                name="chevron-left"
+                size={24}
+                color={currentMonthIndex === 0 ? "#676767" : "white"}
+              />
             </ThemedText>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => changeIndex(index + 1)}>
+          <TouchableOpacity
+            onPress={() => {
+              fadeFromBottom({
+                translateY: calendarTranslateY,
+                opacity: calendarOpacity,
+              });
+              fadeFromTop({
+                translateY: monthYearTranslateY,
+                opacity: monthYearOpacity,
+              });
+              changeIndex(currentMonthIndex + 1);
+            }}
+            disabled={currentMonthIndex > 11}
+          >
             <ThemedText>
-              <Feather name="chevron-right" size={24} color="white" />
+              <Feather
+                name="chevron-right"
+                size={24}
+                color={currentMonthIndex > 11 ? "#676767" : "white"}
+              />
             </ThemedText>
           </TouchableOpacity>
         </View>
@@ -198,22 +319,33 @@ export const Calendar = () => {
           </View>
         ))}
       </View>
-      <View style={{ flexDirection: "row", overflow: "hidden", width: "100%" }}>
-        {Array.from({ length: 12 }, (_, index) => (
-          <View key={index} style={{ width: "100%" }}>
+
+      <Animated.View
+        style={[
+          calendarAnimatedStyle,
+          { flexDirection: "row", overflow: "hidden", width: "100%" },
+        ]}
+      >
+        {Array.from({ length: 12 }, (_, indexArr) => (
+          <View key={indexArr} style={{ width: "100%" }}>
             {dayRows.map((row, rowIndex) => (
               <View key={rowIndex} style={styles.row}>
-                {row.map((day, index) => (
+                {row.map((day, indexDay) => (
                   <View
-                    key={index}
+                    key={indexDay}
                     style={[
                       styles.box,
                       styles.border,
-                      rowIndex == 0 && index < 8 && { borderTopWidth: 1 },
-                      index == 0 && { borderLeftWidth: 0 },
-                      index == row.length - 1 &&
+                      rowIndex == 0 && indexDay < 8 && { borderTopWidth: 1 },
+                      indexDay == 0 && { borderLeftWidth: 0 },
+                      indexDay == row.length - 1 &&
                         row.length % 7 === 1 && {
                           borderRightWidth: 0,
+                        },
+                      selectedDay?.day.day === day.toString() &&
+                        selectedDay?.currentSelectedIndex ===
+                          currentMonthIndex && {
+                          backgroundColor: "#2d2d2d",
                         },
                     ]}
                   >
@@ -221,7 +353,10 @@ export const Calendar = () => {
                       day={day.toString()}
                       onPress={() => {
                         const value = getDayValue(day);
-                        console.log(value);
+                        setSelectedDay({
+                          day: value,
+                          currentSelectedIndex: currentMonthIndex,
+                        });
                       }}
                     />
                   </View>
@@ -245,17 +380,19 @@ export const Calendar = () => {
             ))}
           </View>
         ))}
-      </View>
-    </LinearGradient>
+      </Animated.View>
+    </View>
   );
 };
 
 const DayLabel = ({
   day,
   onPress,
+  selected,
 }: {
   day: TWeekDays | string;
   onPress?: () => void;
+  selected?: boolean;
 }) => {
   return (
     <TouchableOpacity onPress={onPress}>
@@ -281,6 +418,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     justifyContent: "center",
+    width: "100%",
   },
   text: {
     fontSize: 15,

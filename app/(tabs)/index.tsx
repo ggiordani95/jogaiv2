@@ -8,11 +8,13 @@ import { FontAwesome6 } from "@expo/vector-icons";
 import { useThemeColor } from "@/styles/hooks/useThemeColor";
 import { useEffect } from "react";
 import { useRouter } from "expo-router";
+import { SchedulePlanner } from "@/components/SchedulePlanner";
 
 export default function HomeScreen() {
   const textColor = useThemeColor({}, "text");
+
   const router = useRouter();
-  const isAuthenticated = false;
+  const isAuthenticated = true;
   useEffect(() => {
     if (isAuthenticated) return;
     setTimeout(() => {
@@ -21,7 +23,7 @@ export default function HomeScreen() {
   }, []);
   return (
     <Section>
-      <ScrollView>
+      {/* <ScrollView>
         <SearchFilter
           bgColorVariant="bgContentPrimary"
           headerComponent={
@@ -42,7 +44,9 @@ export default function HomeScreen() {
           }
         />
         <ScrollList headerTitle="Escolha o esporte" />
-      </ScrollView>
+      </ScrollView> */}
+      <View style={{ paddingTop: 90 }}></View>
+      <SchedulePlanner />
     </Section>
   );
 }

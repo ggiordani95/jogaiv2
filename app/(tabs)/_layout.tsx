@@ -6,6 +6,7 @@ import { tabsRoutes } from "@/routes/(tabs)/tabsRoutes";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  console.log({ colorScheme });
   const currentPath = usePathname();
   const getLabelStyle = (routeName: string) => ({
     color:

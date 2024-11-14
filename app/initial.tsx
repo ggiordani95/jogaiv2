@@ -2,7 +2,7 @@ import { Stack, useRouter, useSegments } from "expo-router";
 import { useEffect } from "react";
 import { BackHandler } from "react-native";
 
-export const InitialLayout = () => {
+export default function InitialLayout() {
   const segments = useSegments();
   const router = useRouter();
   //   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -42,4 +42,4 @@ export const InitialLayout = () => {
       />
     </Stack>
   );
-};
+}
