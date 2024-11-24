@@ -32,7 +32,7 @@ type TaskType = {
 
 const tasks: TaskType[] = [
   {
-    x: 0,
+    x: 20,
     y: 60,
     id: "1",
     desc: "Reunião 1",
@@ -71,7 +71,6 @@ const COLUMN_HEIGHT = 72;
 const TASK_HEIGHT = 33;
 const MARGIN_HORIZONTAL = 24;
 const MAIN_COLOR = "#7979ff";
-
 export const DayPlanner = () => {
   const { width } = useWindowDimensions();
   const [isDragging, setIsDragging] = useState(false);
@@ -79,8 +78,8 @@ export const DayPlanner = () => {
     tasks.map((item) => ({ x: item.x, y: item.y, width: 0 }))
   );
 
-  const translationValueX = tasks.map(() => useSharedValue(0));
-  const translationValueY = tasks.map(() => useSharedValue(0));
+  const translationValueX = tasks.map(() => useSharedValue(MARGIN_HORIZONTAL));
+  const translationValueY = tasks.map(() => useSharedValue(10));
 
   const columnActive = useSharedValue<number | null>(0);
 
@@ -198,26 +197,36 @@ export const DayPlanner = () => {
         borderWidth: columnActive.value == index && isDragging ? 0 : 0,
         borderColor: MAIN_COLOR,
         borderStyle: "dotted",
+        backgroundColor:
+          columnActive.value == index && isDragging
+            ? MAIN_COLOR
+            : "transparent",
       };
     });
   const hourScale = columns.map(() => useSharedValue(1));
 
   const hourStyle = (index: number) =>
     useAnimatedStyle(() => {
+      const isActive = columnActive.value == index && isDragging;
       return {
         transform: [
           {
-            scale:
-              columnActive.value == index && isDragging
-                ? hourScale[index].value
-                : 1,
+            scale: isActive ? hourScale[index].value : 1,
           },
         ],
-        color: columnActive.value == index && isDragging ? MAIN_COLOR : "white",
+        bottom: isActive ? 24 : isDragging ? 0 : 9,
+        color: isActive ? MAIN_COLOR : "white",
+      };
+    });
+  const hourBorderStyle = (index: number) =>
+    useAnimatedStyle(() => {
+      return {
+        borderWidth: columnActive.value == index && isDragging ? 0 : 1,
       };
     });
 
   useDerivedValue(() => {
+    "worklet";
     hourScale.forEach((scale, index) => {
       index == columnActive.value
         ? (hourScale[index].value = withTiming(1.2, { duration: 120 }))
@@ -292,15 +301,18 @@ export const DayPlanner = () => {
             >
               {column.hour}
             </Animated.Text>
-            <View
-              style={{
-                height: 1,
-                width: "100%",
-                borderColor: "#262626",
-                borderWidth: 1,
-                position: "relative",
-              }}
-            ></View>
+            <Animated.View
+              style={[
+                {
+                  height: 0,
+                  width: "100%",
+                  borderColor: "#262626",
+                  borderWidth: 1,
+                  position: "relative",
+                },
+                hourBorderStyle(index),
+              ]}
+            ></Animated.View>
           </Animated.View>
         );
       })}
