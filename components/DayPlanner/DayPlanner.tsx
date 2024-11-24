@@ -14,8 +14,10 @@ import {
 } from "react-native-gesture-handler";
 import Animated, {
   useAnimatedStyle,
+  useDerivedValue,
   useSharedValue,
   withSpring,
+  withTiming,
 } from "react-native-reanimated";
 
 const PADDINGTOP = 60;
@@ -51,13 +53,26 @@ const columns = [
     id: 3,
     hour: "10",
   },
+  {
+    id: 4,
+    hour: "11",
+  },
+  {
+    id: 5,
+    hour: "12",
+  },
+  {
+    id: 6,
+    hour: "13",
+  },
 ];
 
 const COLUMN_HEIGHT = 72;
 const TASK_HEIGHT = 33;
 const MARGIN_HORIZONTAL = 24;
+const MAIN_COLOR = "#7979ff";
 
-export const TrainingGesture = () => {
+export const DayPlanner = () => {
   const { width } = useWindowDimensions();
   const [isDragging, setIsDragging] = useState(false);
   const [dragLayout, setDragLayout] = useState(
@@ -150,12 +165,12 @@ export const TrainingGesture = () => {
         if (columnIndex === null) return returnToInitialPosition(index);
         setPosition(index, dropY);
         translationValueX[index].value = withSpring(20, {
-          damping: 30,
-          stiffness: 60,
+          damping: 10,
+          stiffness: 20,
         });
         translationValueY[index].value = withSpring(
           columnIndex * COLUMN_HEIGHT + TASK_HEIGHT / 1.5,
-          { damping: 30, stiffness: 60 }
+          { damping: 10, stiffness: 20 }
         );
 
         setIsDragging(false);
@@ -165,48 +180,6 @@ export const TrainingGesture = () => {
   const panGestureHandler = tasks.map((_, index) =>
     createPanGestureHandler(index)
   );
-
-  // const gesture = Gesture.Pan()
-  //   .runOnJS(true)
-  //   .onStart((e) => {
-  //     x.value = dragLayout.x;
-  //     y.value = dragLayout.y;
-  //   })
-  //   .onUpdate((e) => {
-  //     console.log(
-  //       dragLayout.x,
-  //       dropzoneLayout.height,
-  //       PADDINGTOP,
-  //       imageLayout.height
-  //     );
-  //     x.value = e.translationX + dragLayout.x;
-  //     y.value = e.translationY + dragLayout.y;
-  //   })
-  //   .onEnd((e) => {
-  //     if (
-  //       imageLayout &&
-  //       e.translationY +
-  //         dragLayout.y +
-  //         dropzoneLayout.height -
-  //         imageLayout.height >=
-  //         dropzoneLayout.y &&
-  //       e.translationX + dragLayout.x >= dropzoneLayout.x
-  //     ) {
-  //       const dropW = dropzoneLayout.width;
-  //       const dropH = dropzoneLayout.height;
-  //       const dragH = imageLayout.height;
-  //       const dragW = imageLayout.width;
-  //       const finalY = elementY.current - dragH;
-  //       const finalX = elementX.current + dropW / 2 - dragW / 2;
-  //       x.value = withSpring(finalX);
-  //       y.value = withSpring(finalY);
-  //       setDragLayout({ ...dragLayout, x: finalX, y: finalY });
-  //     } else {
-  //       x.value = withSpring(0);
-  //       y.value = withSpring(0);
-  //       setDragLayout({ ...dragLayout, x: 20, y: 40 });
-  //     }
-  //   });
 
   const animatedStyles = (index: number) =>
     useAnimatedStyle(() => {
@@ -222,9 +195,35 @@ export const TrainingGesture = () => {
   const columnStyle = (index: number) =>
     useAnimatedStyle(() => {
       return {
-        backgroundColor: columnActive.value == index ? "#262626" : "#131313",
+        borderWidth: columnActive.value == index && isDragging ? 0 : 0,
+        borderColor: MAIN_COLOR,
+        borderStyle: "dotted",
       };
     });
+  const hourScale = columns.map(() => useSharedValue(1));
+
+  const hourStyle = (index: number) =>
+    useAnimatedStyle(() => {
+      return {
+        transform: [
+          {
+            scale:
+              columnActive.value == index && isDragging
+                ? hourScale[index].value
+                : 1,
+          },
+        ],
+        color: columnActive.value == index && isDragging ? MAIN_COLOR : "white",
+      };
+    });
+
+  useDerivedValue(() => {
+    hourScale.forEach((scale, index) => {
+      index == columnActive.value
+        ? (hourScale[index].value = withTiming(1.2, { duration: 120 }))
+        : (scale.value = 1);
+    });
+  }, [columnActive]);
 
   return (
     <View style={{ height: "100%", width: "100%", paddingTop: PADDINGTOP }}>
@@ -280,21 +279,25 @@ export const TrainingGesture = () => {
               columnStyle(index),
             ]}
           >
-            <Text
-              style={{
-                color: "white",
-                position: "relative",
-                minHeight: 20,
-                bottom: 9,
-              }}
+            <Animated.Text
+              style={[
+                {
+                  color: "white",
+                  position: "relative",
+                  minHeight: 20,
+                  bottom: 9,
+                },
+                hourStyle(index),
+              ]}
             >
               {column.hour}
-            </Text>
+            </Animated.Text>
             <View
               style={{
                 height: 1,
                 width: "100%",
-                backgroundColor: "white",
+                borderColor: "#262626",
+                borderWidth: 1,
                 position: "relative",
               }}
             ></View>

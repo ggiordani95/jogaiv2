@@ -9,7 +9,7 @@ import { useThemeColor } from "@/styles/hooks/useThemeColor";
 import { useEffect } from "react";
 import { useRouter } from "expo-router";
 
-import { TrainingGesture } from "@/components/TrainingGesture/TrainingGesture";
+import { DayPlanner } from "@/components/DayPlanner/DayPlanner";
 import { SchedulePlanner } from "@/components/SchedulePlanner";
 import { Calendar } from "@/components/Calendar";
 
@@ -28,7 +28,7 @@ export default function HomeScreen() {
     <Section>
       <View style={{ marginTop: 40 }}></View>
       <>
-        <TrainingGesture />
+        <DayPlanner />
       </>
       {/* <ScrollView>
         <SearchFilter
