@@ -1,5 +1,6 @@
 import { Calendar } from "@/components/Calendar";
 import { SchedulePlanner } from "@/components/SchedulePlanner";
+
 import { LinearGradient } from "expo-linear-gradient";
 
 export default function Page() {
@@ -9,7 +10,7 @@ export default function Page() {
       style={{ flex: 1 }}
     >
       {/* <Calendar /> */}
-      <SchedulePlanner />
+      {/* <SchedulePlanner /> */}
     </LinearGradient>
   );
 }

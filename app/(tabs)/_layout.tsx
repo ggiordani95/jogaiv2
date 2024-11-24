@@ -6,7 +6,6 @@ import { tabsRoutes } from "@/routes/(tabs)/tabsRoutes";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-  console.log({ colorScheme });
   const currentPath = usePathname();
   const getLabelStyle = (routeName: string) => ({
     color:
@@ -15,6 +14,16 @@ export default function TabLayout() {
         : Colors[colorScheme ?? "light"].tabIconDefault,
   });
 
+  const hideTabBarScreens = ["(modals)"];
+
+  function visibleHandler(name: string) {
+    if (hideTabBarScreens.includes(name)) {
+      return () => null;
+    } else {
+      return undefined;
+    }
+  }
+
   return (
     <Tabs
       screenOptions={{
@@ -22,6 +31,7 @@ export default function TabLayout() {
         tabBarStyle: {
           backgroundColor: Colors[colorScheme ?? "light"].tabBarBackground,
           borderTopColor: Colors[colorScheme ?? "light"].bgContentPrimary,
+          display: "none",
         },
         headerShown: false,
       }}
@@ -43,7 +53,7 @@ export default function TabLayout() {
                 focused={focused}
               />
             ),
-            tabBarButton: name === "(modals)" ? () => null : undefined,
+            tabBarButton: visibleHandler(name),
           }}
         />
       ))}

@@ -8,7 +8,10 @@ import { FontAwesome6 } from "@expo/vector-icons";
 import { useThemeColor } from "@/styles/hooks/useThemeColor";
 import { useEffect } from "react";
 import { useRouter } from "expo-router";
+
+import { TrainingGesture } from "@/components/TrainingGesture/TrainingGesture";
 import { SchedulePlanner } from "@/components/SchedulePlanner";
+import { Calendar } from "@/components/Calendar";
 
 export default function HomeScreen() {
   const textColor = useThemeColor({}, "text");
@@ -23,6 +26,10 @@ export default function HomeScreen() {
   }, []);
   return (
     <Section>
+      <View style={{ marginTop: 40 }}></View>
+      <>
+        <TrainingGesture />
+      </>
       {/* <ScrollView>
         <SearchFilter
           bgColorVariant="bgContentPrimary"
@@ -45,8 +52,8 @@ export default function HomeScreen() {
         />
         <ScrollList headerTitle="Escolha o esporte" />
       </ScrollView> */}
-      <View style={{ paddingTop: 90 }}></View>
-      <SchedulePlanner />
+      {/* <Calendar /> */}
+      {/* <SchedulePlanner /> */}
     </Section>
   );
 }
