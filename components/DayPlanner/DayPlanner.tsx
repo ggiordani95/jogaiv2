@@ -23,8 +23,7 @@ import Animated, {
 const PADDINGTOP = 60;
 
 type TaskType = {
-  x: number;
-  y: number;
+  from: number;
   id: string;
   desc: string;
   bg: ColorValue;
@@ -32,11 +31,16 @@ type TaskType = {
 
 const tasks: TaskType[] = [
   {
-    x: 20,
-    y: 60,
+    from: 8,
     id: "1",
     desc: "Reunião 1",
-    bg: "#00ff00",
+    bg: "#00ffe5",
+  },
+  {
+    from: 8,
+    id: "2",
+    desc: "Reunião 2",
+    bg: "#45810a",
   },
 ];
 
@@ -75,19 +79,27 @@ export const DayPlanner = () => {
   const { width } = useWindowDimensions();
   const [isDragging, setIsDragging] = useState(false);
   const [dragLayout, setDragLayout] = useState(
-    tasks.map((item) => ({ x: item.x, y: item.y, width: 0 }))
+    tasks.map((item, index) => ({
+      x: index > 0 ? 180 : MARGIN_HORIZONTAL,
+      y: 20,
+      width: 0,
+    }))
   );
 
-  const translationValueX = tasks.map(() => useSharedValue(MARGIN_HORIZONTAL));
-  const translationValueY = tasks.map(() => useSharedValue(10));
+  const translationValueX = tasks.map((task, index) =>
+    useSharedValue(index > 0 ? 40 : MARGIN_HORIZONTAL)
+  );
+  const translationValueY = tasks.map((task, index) => useSharedValue(20));
 
   const columnActive = useSharedValue<number | null>(0);
 
   const handleColumn = (
-    event: GestureUpdateEvent<PanGestureHandlerEventPayload>
+    event: GestureUpdateEvent<PanGestureHandlerEventPayload>,
+    index: number
   ) => {
+    if (!dragLayout[index]) return null;
     const hoveredColumn = Math.round(
-      (dragLayout[0].y + event.translationY - PADDINGTOP + TASK_HEIGHT) /
+      (dragLayout[index].y + event.translationY - PADDINGTOP + TASK_HEIGHT) /
         COLUMN_HEIGHT
     );
 
@@ -134,8 +146,7 @@ export const DayPlanner = () => {
       })
       .onUpdate((event) => {
         if (!isDragging) setIsDragging(true);
-        handleColumn(event);
-
+        handleColumn(event, index);
         translationValueX[index].value =
           dragLayout[index].x + event.translationX;
         translationValueY[index].value =
@@ -160,7 +171,7 @@ export const DayPlanner = () => {
 
         const dropY = event.translationY + dragLayout[index].y;
 
-        const columnIndex = handleColumn(event);
+        const columnIndex = handleColumn(event, index);
         if (columnIndex === null) return returnToInitialPosition(index);
         setPosition(index, dropY);
         translationValueX[index].value = withSpring(20, {
@@ -216,6 +227,7 @@ export const DayPlanner = () => {
         ],
         bottom: isActive ? 24 : isDragging ? 0 : 9,
         color: isActive ? MAIN_COLOR : "white",
+        fontWeight: isActive ? "bold" : "normal",
       };
     });
   const hourBorderStyle = (index: number) =>
@@ -236,38 +248,41 @@ export const DayPlanner = () => {
 
   return (
     <View style={{ height: "100%", width: "100%", paddingTop: PADDINGTOP }}>
-      {tasks.map((item, index) => {
-        return (
-          <GestureDetector key={index} gesture={panGestureHandler[index]}>
-            <Animated.View
-              style={[
-                animatedStyles(index),
-                {
-                  backgroundColor: item.bg,
-                  height: TASK_HEIGHT,
-                  width: 160,
-                  borderRadius: 8,
-                  justifyContent: "center",
-                  alignItems: "center",
-                },
-              ]}
-              onLayout={(event) => {
-                setDragLayout((prev) => {
-                  const newLayout = [...prev];
-                  newLayout[index] = {
-                    y: event.nativeEvent.layout.y,
-                    x: event.nativeEvent.layout.x,
-                    width: event.nativeEvent.layout.width,
-                  };
-                  return newLayout;
-                });
-              }}
-            >
-              <Text>{item.desc}</Text>
-            </Animated.View>
-          </GestureDetector>
-        );
-      })}
+      <View style={{ flexDirection: "row", gap: 4 }}>
+        {tasks.map((item, index) => {
+          return (
+            <GestureDetector key={index} gesture={panGestureHandler[index]}>
+              <Animated.View
+                style={[
+                  animatedStyles(index),
+                  {
+                    backgroundColor: item.bg,
+                    height: TASK_HEIGHT,
+                    width: 160,
+                    borderRadius: 8,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  },
+                ]}
+                onLayout={(event) => {
+                  event.persist();
+                  setDragLayout((prev) => {
+                    const newLayout = [...prev];
+                    newLayout[index] = {
+                      y: event.nativeEvent.layout.y,
+                      x: event.nativeEvent.layout.x,
+                      width: event.nativeEvent.layout.width,
+                    };
+                    return newLayout;
+                  });
+                }}
+              >
+                <Text>{item.desc}</Text>
+              </Animated.View>
+            </GestureDetector>
+          );
+        })}
+      </View>
       {columns.map((column, index) => {
         return (
           <Animated.View
