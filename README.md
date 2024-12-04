@@ -48,5 +48,7 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
 # jogaiv2 git init git add README.md git commit -m first commit git branch -M master git remote add origin https://github.com/ggiordani95/jogaiv2.git git push -u origin master
+
 # jogaiv2 git init git add README.md git commit -m first commit git branch -M master git remote add origin https://github.com/ggiordani95/jogaiv2.git git push -u origin master

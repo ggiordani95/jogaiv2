@@ -71,6 +71,13 @@ const columns = [
   },
 ];
 
+// const columns = [...Array(24)].map((_, index) => {
+//   return {
+//     id: index,
+//     hour: index.toString().padStart(2, "0"),
+//   };
+// });
+
 const COLUMN_HEIGHT = 72;
 const TASK_HEIGHT = 33;
 const MARGIN_HORIZONTAL = 24;

@@ -35,6 +35,7 @@ const SpaceFromTop = 60;
 export default function SearchFilter({
   bgColorVariant,
   headerComponent,
+  placeholder = "Pesquisar",
   ...rest
 }: TSearchFilter): JSX.Element {
   const { color } = useFilterThemeColor(
@@ -92,10 +93,11 @@ export default function SearchFilter({
         ]}
       >
         <SearchBar
+          placeholder={placeholder}
           animationProps={{
             position: searchBarPosition,
             opacity: searchBarOpacity,
-            width: searchBarWidth,
+            width: searchBarWidth as any,
             headerHeight,
           }}
           isFocused={handleFocus}
@@ -129,6 +131,7 @@ type TSearchBar = {
   isFocused: (isFocused: boolean) => void;
   inputRef: React.RefObject<TextInput>;
   bgColorVariant: string;
+  placeholder: string;
 } & TextInputProps;
 
 const SearchBar = ({
@@ -136,6 +139,7 @@ const SearchBar = ({
   isFocused,
   inputRef,
   bgColorVariant,
+  placeholder,
   ...rest
 }: TSearchBar) => {
   const [text, setText] = useState<string>("");
@@ -190,16 +194,11 @@ const SearchBar = ({
   return (
     <Animated.View style={[styles.searchContainer, animatedStyle]}>
       <TextInput
-        placeholder="Pesquisar pelo nome da arena"
+        placeholder={placeholder}
         onChangeText={(e) => setText(e)}
         value={text}
-        style={[
-          styles.searchInput,
-          {
-            backgroundColor: bgColorVariant,
-            color: Colors[colorScheme ?? "light"].text,
-          },
-        ]}
+        className="bg-foreground color-text"
+        style={[styles.searchInput]}
         {...rest}
         onFocus={handleFocus}
         onBlur={handleBlur}

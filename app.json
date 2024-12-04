@@ -2,7 +2,6 @@
   "expo": {
     "name": "ggiordani-boilerplate",
     "slug": "ggiordani-boilerplate",
-    "version": "1.0.0",
     "orientation": "portrait",
     "newArchEnabled": true,
     "icon": "./assets/images/icon.png",

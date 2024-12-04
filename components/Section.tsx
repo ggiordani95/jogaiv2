@@ -1,5 +1,7 @@
 import { useThemeColor } from "@/styles/hooks/useThemeColor";
+import { LinearGradient } from "expo-linear-gradient";
 import { View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 interface SectionProps {
   children: React.ReactNode;
@@ -7,11 +9,14 @@ interface SectionProps {
 }
 
 export const Section = ({ children, style }: SectionProps) => {
-  const background = useThemeColor({}, "background");
   return (
-    <View style={[styles.section, style, { backgroundColor: background }]}>
-      {children}
-    </View>
+    <LinearGradient
+      className="flex h-full w-screen"
+      colors={["#04070d", "#04070d"]}
+      style={{ flex: 1 }}
+    >
+      <SafeAreaView>{children}</SafeAreaView>
+    </LinearGradient>
   );
 };
 

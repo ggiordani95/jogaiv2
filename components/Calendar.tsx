@@ -135,7 +135,6 @@ const getAllYearCalendar = () => {
     if (index > 12 || index < 0) return;
     setCurrentMonthIndex(index);
   };
-
   const getDaysRows = (numberOfDays: number) => {
     const days = Array.from({ length: numberOfDays }, (_, index) => index + 1);
     const rows: number[][] = [];
