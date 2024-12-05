@@ -6,7 +6,7 @@ import CustomText from "@/components/customs/text/custom.text";
 const ArenaFooter = ({ store }: { store: ArenaType }) => {
   return (
     <View className="flex flex-col pl-6 gap-9 mt-24 h-16">
-      <View className="flex flex-1 mr-6 rounded-xl bg-yellow-400 justify-center items-center">
+      <View className="flex flex-1 mr-6 rounded-2xl bg-yellow-400 justify-center items-center">
         <CustomText
           fontWeight={"Regular"}
           text={"Continuar"}

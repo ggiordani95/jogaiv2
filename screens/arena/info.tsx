@@ -17,11 +17,12 @@ const ArenaInfo = ({ store }: { store: ArenaType }) => {
         />
         <ArenaInfo.Title text={store.display_name} />
       </View>
-      <ArenaInfo.Address icon={false} />
-      <ArenaInfo.Line />
       <ArenaInfo.Hours hasLabel={false} />
-      <ArenaInfo.Line />
       <ArenaInfo.Contact />
+      <ArenaInfo.Line />
+      <ArenaInfo.Address icon={false} />
+      {/* <ArenaInfo.Line />
+      <ArenaInfo.Contact /> */}
       <ArenaInfo.Line />
     </View>
   );
@@ -33,6 +34,7 @@ ArenaInfo.Logo = ({ source, ...props }: { source: { uri: string } }) => {
       style={{
         width: 30,
         height: 30,
+        borderRadius: 10,
       }}
       source={source}
       {...props}
@@ -130,7 +132,7 @@ ArenaInfo.Hours = ({ hasLabel }: { hasLabel: boolean }) => {
 ArenaInfo.Contact = () => {
   return (
     <View className="flex flex-row justify-between items-center pr-6">
-      <View className="flex flex-col gap-6">
+      <View className="flex flex-col gap-3">
         <CustomText
           text="Telefone"
           fontWeight="Medium"
@@ -146,7 +148,7 @@ ArenaInfo.Contact = () => {
           />
         </View>
       </View>
-      <View className="flex flex-col gap-6">
+      <View className="flex flex-col gap-3">
         <CustomText
           text="Whatsapp"
           fontWeight="Medium"
