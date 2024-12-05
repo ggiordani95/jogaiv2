@@ -5,8 +5,7 @@ import { Section } from "@/components/Section";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { useEffect } from "react";
 import { useRouter } from "expo-router";
-import { ArenaHeader } from "@/screens/arena/header";
-import Arena from "@/screens/arena/arena";
+import { ArenaScreen } from "@/screens/arena/arena.screen";
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -23,9 +22,8 @@ export default function HomeScreen() {
       {/* <>
         <DayPlanner />
       </> */}
-      <ScrollView className="min-h-full">
-        <Arena />
-      </ScrollView>
+
+      <ArenaScreen />
     </Section>
   );
 }
