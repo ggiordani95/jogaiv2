@@ -1,4 +1,3 @@
-import { useThemeColor } from "@/styles/hooks/useThemeColor";
 import { LinearGradient } from "expo-linear-gradient";
 import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";

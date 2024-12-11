@@ -1,4 +1,3 @@
-import { Spacing } from "@/constants/Spacing";
 import { ThemedView, ThemedViewProps } from "./ThemedView";
 import { StyleSheet } from "react-native";
 
@@ -10,6 +9,6 @@ export const SpacedView = ({ style, ...otherProps }: SpacedViewProps) => {
 
 const styles = StyleSheet.create({
   spacing: {
-    padding: Spacing.small,
+    padding: 12,
   },
 });

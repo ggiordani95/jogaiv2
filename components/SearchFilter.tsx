@@ -16,12 +16,6 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { Colors } from "@/constants/Colors";
-import { useFilterThemeColor } from "@/styles/hooks/useFilterThemeColor";
-import { Borders } from "@/constants/Borders";
-import { BoxSizes } from "@/constants/BoxSizes";
-import { Spacing } from "@/constants/Spacing";
-import { FontSizes } from "@/constants/FontSizes";
 import { SpacedView } from "./SpacedView";
 
 type TSearchFilter = {
@@ -29,7 +23,7 @@ type TSearchFilter = {
   headerComponent?: JSX.Element;
 } & TextInputProps;
 
-const SearchInputHeight = BoxSizes.large;
+const SearchInputHeight = 60;
 const SpaceFromTop = 60;
 
 export default function SearchFilter({
@@ -38,11 +32,6 @@ export default function SearchFilter({
   placeholder = "Pesquisar",
   ...rest
 }: TSearchFilter): JSX.Element {
-  const { color } = useFilterThemeColor(
-    bgColorVariant as keyof typeof Colors.light | keyof typeof Colors.dark,
-    "bgContentPrimary"
-  );
-
   const [searchFilterIsShown, setSearchFilterIsShown] = useState(false);
   const [headerHeight, setHeaderHeight] = useState(0);
   const searchInputRef = useRef<TextInput>(null);
@@ -83,7 +72,7 @@ export default function SearchFilter({
           animatedStyle,
           styles.rowCentered,
           {
-            paddingHorizontal: Spacing.small,
+            paddingHorizontal: 14,
             position: searchFilterIsShown ? "absolute" : "relative",
             top: searchFilterIsShown ? SpaceFromTop + 10 : 0,
             flex: 1,
@@ -102,7 +91,7 @@ export default function SearchFilter({
           }}
           isFocused={handleFocus}
           inputRef={searchInputRef}
-          bgColorVariant={color}
+          bgColorVariant={"red"}
           {...rest}
         />
         {searchFilterIsShown && (
@@ -110,7 +99,7 @@ export default function SearchFilter({
             <ThemedText
               colorVariant="action"
               weight="regular"
-              style={{ paddingRight: Spacing.medium }}
+              style={{ paddingRight: 14 }}
             >
               Cancelar
             </ThemedText>
@@ -225,7 +214,7 @@ const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: "row",
     alignItems: "center",
-    gap: Spacing.xsmall,
+    gap: 14,
   },
   rowCentered: {
     flexDirection: "row",
@@ -235,15 +224,15 @@ const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginHorizontal: Spacing.small,
+    marginHorizontal: 14,
     position: "relative",
   },
   searchInput: {
     height: SearchInputHeight,
-    borderRadius: Borders.radiusLarge,
-    marginVertical: Spacing.xsmall,
-    paddingHorizontal: Spacing.small,
-    fontSize: FontSizes.medium,
+    borderRadius: 24,
+    marginVertical: 14,
+    paddingHorizontal: 14,
+    fontSize: 16,
     width: "100%",
   },
   closeRounded: {
@@ -251,6 +240,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     justifyContent: "center",
     alignItems: "center",
-    right: Spacing.small,
+    right: 14,
   },
 });

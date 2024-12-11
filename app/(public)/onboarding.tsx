@@ -3,10 +3,8 @@ import { Section } from "@/components/Section";
 import Sports from "@/assets/lotties/sports.json";
 import { View } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
-import { useThemeColor } from "@/styles/hooks/useThemeColor";
 
 export default function Page() {
-  const backgroundColor = useThemeColor({}, "primary");
   return (
     <Section>
       <View
@@ -18,7 +16,7 @@ export default function Page() {
       >
         <View
           style={{
-            backgroundColor: backgroundColor,
+            backgroundColor: "red",
             width: "100%",
             alignItems: "center",
             justifyContent: "flex-end",

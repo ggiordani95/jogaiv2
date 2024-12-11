@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import React from "react";
 import { ScrollView } from "react-native-gesture-handler";
-import { Spacing } from "@/constants/Spacing";
+
 import { ThemedTouchable } from "./ThemedTouchable";
 import { ThemedText } from "./ThemedText";
 import { Image } from "react-native";
@@ -14,16 +14,16 @@ export const ScrollList = ({ headerTitle }: PROPS) => {
   return (
     <View style={{ marginVertical: 4, marginTop: 20 }}>
       {headerTitle && (
-        <ThemedText variant="large" weight="bold" ml={Spacing.small}>
+        <ThemedText variant="large" weight="bold" ml={12}>
           {headerTitle}
         </ThemedText>
       )}
       <ScrollView
-        style={{ marginVertical: Spacing.small }}
+        style={{ marginVertical: 12 }}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           justifyContent: "center",
-          marginLeft: Spacing.small,
+          marginLeft: 12,
         }}
       >
         <ThemedTouchable

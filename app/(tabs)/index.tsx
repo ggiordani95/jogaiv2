@@ -6,6 +6,7 @@ import { FontAwesome6 } from "@expo/vector-icons";
 import { useEffect } from "react";
 import { useRouter } from "expo-router";
 import { ArenaScreen } from "@/screens/arena/arena.screen";
+import { UIComponent } from "@/theme/ui/UI";
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -22,8 +23,9 @@ export default function HomeScreen() {
       {/* <>
         <DayPlanner />
       </> */}
-
-      <ArenaScreen />
+      <></>
+      {/* <ArenaScreen /> */}
+      <UIComponent.Text preset="Body" text="Sample Text" />
     </Section>
   );
 }
