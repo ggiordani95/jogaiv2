@@ -11,7 +11,7 @@ export const Section = ({ children, style }: SectionProps) => {
   return (
     <LinearGradient
       className="flex h-full w-screen"
-      colors={["#04070d", "#04070d"]}
+      colors={["#0a0a0a", "#0a0a0a"]}
       style={{ flex: 1 }}
     >
       <SafeAreaView>{children}</SafeAreaView>

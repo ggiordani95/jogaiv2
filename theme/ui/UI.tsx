@@ -1,9 +1,19 @@
-import { Text, UITextProps } from "./view/Text/Text";
+import { Text, UITextProps } from "./components/Text";
+import { TextInput, UITextInputProps } from "./components/TextInput";
+import { UIViewProps, View } from "./components/View";
 
-export const UIComponent = ({ children }: { children: JSX.Element }) => {
+export const UI = ({ children }: { children: JSX.Element }) => {
   return <>{children}</>;
 };
 
-UIComponent.Text = ({ ...props }: UITextProps) => {
-  return <Text preset={props.preset} style={props.style} text={props.text} />;
+UI.Text = ({ ...props }: UITextProps) => {
+  return <Text {...props} />;
+};
+
+UI.View = ({ ...props }: UIViewProps) => {
+  return <View {...props}>{props.children}</View>;
+};
+
+UI.TextInput = ({ ...props }: UITextInputProps) => {
+  return <TextInput {...props} />;
 };

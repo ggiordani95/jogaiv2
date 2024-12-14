@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Image } from "react-native";
 import { ArenaType } from "./arena.store";
-import CustomText from "@/theme/ui/view/Text/Text";
+import CustomText from "@/theme/ui/components/Text";
 
 const ArenaFooter = ({ store }: { store: ArenaType }) => {
   return (

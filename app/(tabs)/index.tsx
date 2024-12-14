@@ -1,12 +1,12 @@
-import { ScrollView, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { ThemedText } from "@/components/ThemedText";
 import SearchFilter from "@/components/SearchFilter";
 import { Section } from "@/components/Section";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { useEffect } from "react";
 import { useRouter } from "expo-router";
-import { ArenaScreen } from "@/screens/arena/arena.screen";
-import { UIComponent } from "@/theme/ui/UI";
+import { UI } from "@/theme/ui/UI";
+import { UIGlobal } from "@/theme/ui/presets/UIGlobal";
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -17,15 +17,28 @@ export default function HomeScreen() {
       router.push("/(modals)/login");
     }, 1000);
   }, []);
-
   return (
     <Section>
       {/* <>
         <DayPlanner />
       </> */}
       <></>
-      {/* <ArenaScreen /> */}
-      <UIComponent.Text preset="Body" text="Sample Text" />
+      <UI.View globalPresets={"partialSafeArea"}>
+        <UI.TextInput
+          preset="variant"
+          placeholder="aba"
+          onChangeText={() => {}}
+        />
+      </UI.View>
+      <UI.Text preset="body" color="secondary" text="Sample Text" />
+      <UI.View
+        preset={"rowCentered"}
+        globalPresets={"safeAreaLeft"}
+        gap="lg"
+        mb="xs"
+        bg="main"
+        br="sm"
+      ></UI.View>
     </Section>
   );
 }
