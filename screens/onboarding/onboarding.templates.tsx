@@ -70,7 +70,7 @@ export const CityOnBoarding = () => {
       <Text
         preset={"h2"}
         color={"primary"}
-        text={"Falta pouco!"}
+        text={"Escolher cidade"}
         weight="primaryRegular"
       />
       <View mt={"lg"} style={{ maxWidth: 240 }}>

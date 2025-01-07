@@ -4,7 +4,7 @@ export const Colors = {
   Primary60: "#FFE5BB",
   Primary40: "#FFF2DD",
   Black100: "#080808",
-  Black80: "#212121",
+  Black80: "#101010",
   Black60: "#323232",
   Black40: "#606060",
   White100: "#FFFFFF",
