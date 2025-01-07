@@ -1,5 +1,4 @@
 import { View as RNView, useColorScheme, ViewStyle } from "react-native";
-
 import { Gaps, GapsEnum } from "../../constants/Spacing";
 import { UIGlobal } from "../../presets/UIGlobal";
 import { GlobalPresets, globalPresets } from "../../presets/global";
@@ -11,6 +10,8 @@ import { BoxPresets, boxPresets } from "./z.presets";
 export const View = ({
   padding,
   flex = 0,
+  justify,
+  align,
   mt,
   mh,
   mb,
@@ -27,6 +28,7 @@ export const View = ({
   bg,
   br,
   preset,
+  direction,
   ...props
 }: UIViewProps) => {
   const colorScheme = useColorScheme();
@@ -63,13 +65,16 @@ export const View = ({
         paddingStyles,
         radiusStyle,
         presetStyle,
-        props.style,
         {
+          flexDirection: direction,
+          justifyContent: justify,
+          alignItems: align,
           padding,
           gap: gap ? Gaps[gap] : 0,
           backgroundColor,
           flex,
         },
+        props.style,
       ]}
     >
       {props.children}
@@ -83,6 +88,9 @@ export type UIViewProps = {
   style?: ViewStyle;
   children?: JSX.Element | React.ReactNode;
   padding?: number;
+  direction?: ViewStyle["flexDirection"];
+  justify?: ViewStyle["justifyContent"];
+  align?: ViewStyle["alignItems"];
   br?: keyof typeof RadiusPresets;
   bg?: keyof typeof BgPresets;
   mh?: keyof typeof SpacingPresets;

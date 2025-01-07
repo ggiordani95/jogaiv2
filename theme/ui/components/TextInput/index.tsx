@@ -5,7 +5,7 @@ import {
   useColorScheme,
 } from "react-native";
 import { TextInputPresets, TextInputPresetsEnum } from "./z.presets";
-import { UI } from "../../UI";
+import { View } from "../View";
 
 export const TextInput = ({ ...props }: UITextInputProps) => {
   const preset = props.preset || "default";
@@ -16,13 +16,13 @@ export const TextInput = ({ ...props }: UITextInputProps) => {
   return (
     <>
       {props.icon ? (
-        <UI.View preset="rowCentered">
+        <View preset="rowCentered">
           <RTextInput
             style={[textInputPreset, props.style]}
             placeholder={props.placeholder}
             onChangeText={props.onChangeText}
           />
-        </UI.View>
+        </View>
       ) : (
         <RTextInput
           style={[textInputPreset, props.style]}

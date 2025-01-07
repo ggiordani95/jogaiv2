@@ -1,11 +1,15 @@
 import React from "react";
-import { TouchableOpacity, ViewStyle } from "react-native";
-import { ButtonPresetsEnum, ButtonPresets } from "./z.presets";
+import { TouchableOpacity, ViewStyle, Text } from "react-native";
+import {
+  ButtonPresetsEnum,
+  ButtonPresets,
+  ButtonTextPresets,
+} from "./z.presets";
 
 export const Button = ({ ...props }: UIButtonProps) => {
   return (
     <TouchableOpacity style={[ButtonPresets[props.preset], props.style]}>
-      {props.text}
+      <Text style={[ButtonTextPresets[props.preset]]}>{props.text}</Text>
     </TouchableOpacity>
   );
 };

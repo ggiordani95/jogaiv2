@@ -5,6 +5,8 @@ import {
   TextColorPresetsEnum,
   TextFontPresets,
   TextFontPresetsEnum,
+  TextFontWeightPresets,
+  TextFontWeightPresetsEnum,
 } from "./z.presets";
 
 export const Text = ({ ...props }: UITextProps) => {
@@ -16,9 +18,11 @@ export const Text = ({ ...props }: UITextProps) => {
     <RText
       style={[
         TextFontPresets[props.preset],
+        TextFontWeightPresets[props.weight],
         props.style,
         {
           color: textColor,
+          textAlign: props.align,
         },
       ]}
     >
@@ -30,6 +34,8 @@ export const Text = ({ ...props }: UITextProps) => {
 export type UITextProps = {
   preset: keyof typeof TextFontPresetsEnum;
   color: keyof typeof TextColorPresetsEnum;
+  weight: keyof typeof TextFontWeightPresetsEnum;
+  align?: TextStyle["textAlign"];
   style?: TextStyle;
   text: string;
 };

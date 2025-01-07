@@ -1,26 +1,49 @@
 import { UI } from "../../constants/UIConstants";
 
 export enum TextFontPresetsEnum {
-  header = "header",
-  subheader = "subheader",
+  h1 = "h1",
+  h2 = "h2",
+  h3 = "h3",
+  h4 = "h4",
+  h5 = "h5",
   body = "body",
 }
 
-export const TextFontPresets = {
-  [TextFontPresetsEnum.header]: {
-    fontSize: UI.Typography.FontSize._5xl,
-    lineHeight: 30,
+export enum TextFontWeightPresetsEnum {
+  primaryBold = "primaryBold",
+  primaryRegular = "primaryRegular",
+}
+
+export const TextFontWeightPresets = {
+  [TextFontWeightPresetsEnum.primaryBold]: {
     fontFamily: UI.Typography.FontFamily.Primary.Bold,
   },
-  [TextFontPresetsEnum.subheader]: {
+  [TextFontWeightPresetsEnum.primaryRegular]: {
+    fontFamily: UI.Typography.FontFamily.Primary.Regular,
+  },
+};
+
+export const TextFontPresets = {
+  [TextFontPresetsEnum.h1]: {
+    fontSize: UI.Typography.FontSize._5xl,
+  },
+  [TextFontPresetsEnum.h2]: {
     fontSize: UI.Typography.FontSize._4xl,
-    lineHeight: 22,
-    fontFamily: UI.Typography.FontFamily.Primary.Bold,
+  },
+  [TextFontPresetsEnum.h3]: {
+    fontSize: UI.Typography.FontSize.xxxl,
+    color: UI.Colors.White100,
+  },
+  [TextFontPresetsEnum.h4]: {
+    fontSize: UI.Typography.FontSize.xxl,
+    color: UI.Colors.White100,
+  },
+  [TextFontPresetsEnum.h5]: {
+    fontSize: UI.Typography.FontSize.xl,
+    color: UI.Colors.White100,
   },
   [TextFontPresetsEnum.body]: {
     fontSize: UI.Typography.FontSize.md,
-    lineHeight: 20,
-    fontFamily: UI.Typography.FontFamily.Primary.Regular,
     color: UI.Colors.White100,
   },
 } as const;
@@ -33,6 +56,7 @@ export enum TextColorPresetsEnum {
   error = "error",
   success = "success",
   info = "info",
+  main = "main",
 }
 
 const FixedTextColorsPresets = {
@@ -41,6 +65,7 @@ const FixedTextColorsPresets = {
   [TextColorPresetsEnum.warning]: UI.Colors.Warning60,
   [TextColorPresetsEnum.success]: UI.Colors.Success60,
   [TextColorPresetsEnum.info]: UI.Colors.Info60,
+  [TextColorPresetsEnum.main]: UI.Colors.Primary100,
 } as const;
 
 export const TextColorPresets = (theme: "light" | "dark") =>

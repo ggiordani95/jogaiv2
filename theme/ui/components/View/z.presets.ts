@@ -1,40 +1,57 @@
-// Styles
-const row = { flexDirection: "row" };
-const column = { flexDirection: "column" };
-const alignItemsCenter = { alignItems: "center" };
-const justifyContentCenter = { justifyContent: "center" };
-const justifySpaceBetween = { justifyContent: "space-between" };
-
 export enum BoxPresets {
   row = "row",
   rowCentered = "rowCentered",
+  rowStart = "rowStart",
   columnCentered = "columnCentered",
+  columnEndCentered = "columnEndCentered",
   rowSpaceBetween = "rowSpaceBetween",
+  rowEnd = "rowEnd",
+  rowStartSpaceBetween = "rowStartSpaceBetween",
   columnSpaceBetween = "columnSpaceBetween",
 }
 
 export const boxPresets = {
   [BoxPresets.row]: {
-    row,
+    flexDirection: "row",
+  },
+  [BoxPresets.rowStart]: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
   },
   [BoxPresets.rowCentered]: {
-    row,
-    alignItemsCenter,
-    justifyContentCenter,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  [BoxPresets.rowEnd]: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
   },
   [BoxPresets.columnCentered]: {
-    column,
-    alignItemsCenter,
-    justifyContentCenter,
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  [BoxPresets.columnEndCentered]: {
+    flexDirection: "column",
+    alignItems: "flex-end",
+    justifyContent: "center",
+  },
+  [BoxPresets.rowStartSpaceBetween]: {
+    flexDirection: "row",
+    alignItems: "start",
+    justifyContent: "space-between",
   },
   [BoxPresets.rowSpaceBetween]: {
-    row,
-    alignItemsCenter,
-    justifySpaceBetween,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   [BoxPresets.columnSpaceBetween]: {
-    column,
-    alignItemsCenter,
-    justifySpaceBetween,
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
 } as const;
