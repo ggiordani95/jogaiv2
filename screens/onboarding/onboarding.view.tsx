@@ -87,14 +87,13 @@ export const OnBoarding = () => {
           onViewableItemsChanged={onViewableItemsChanged}
           viewabilityConfig={viewabilityConfig}
         />
-
+        <View bg={"secondary"} style={{ width: width, height: 1 }}></View>
         <View
-          flex={3}
+          flex={1}
           globalPresets={"partialSafeArea"}
           direction="row"
-          align="center"
           justify="space-between"
-          style={{ height: "100%" }}
+          style={{ height: "100%", paddingTop: 14 }}
         >
           <View flex={idx !== onboardingScreens.length - 1 ? 1 : 0}>
             {idx !== 0 && (
