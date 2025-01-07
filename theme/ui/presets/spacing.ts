@@ -1,9 +1,5 @@
 import { ViewStyle } from "react-native";
 
-/**
- * Spacing Presets
- */
-
 export enum SpacingPresets {
   xs = "xs",
   sm = "sm",
@@ -11,10 +7,6 @@ export enum SpacingPresets {
   lg = "lg",
   xl = "xl",
 }
-
-/**
- * Margin Presets
- */
 
 export const marginPresets = (
   type: Extract<keyof ViewStyle, `margin${string}`>
@@ -35,10 +27,6 @@ export const marginPresets = (
     [type]: 32,
   },
 });
-
-/**
- * Padding Presets
- */
 
 export const paddingPresets = (
   type: Extract<keyof ViewStyle, `padding${string}`>

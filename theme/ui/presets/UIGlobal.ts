@@ -1,7 +1,3 @@
-/**
- * Tipagem do UIGlobal
- */
-
 import { ViewStyle } from "react-native";
 import { marginPresets, paddingPresets, SpacingPresets } from "./spacing";
 
@@ -21,10 +17,6 @@ type UIGlobalType = {
   px: Record<SpacingPresets, ViewStyle>;
   py: Record<SpacingPresets, ViewStyle>;
 };
-
-/**
- * Presets Globais
- */
 
 export enum UIGlobalPresets {
   margin = "margin",

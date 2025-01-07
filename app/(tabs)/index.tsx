@@ -1,5 +1,5 @@
 import { Section } from "@/components/Section";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "expo-router";
 import { OnBoarding } from "@/screens/onboarding/onboarding.view";
 

@@ -1,7 +1,3 @@
-/**
- * Radius Presets
- */
-
 export enum RadiusPresets {
   xs = "xs",
   sm = "sm",

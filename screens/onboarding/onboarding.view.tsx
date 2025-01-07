@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   useColorScheme,
   useWindowDimensions,
+  StyleSheet,
 } from "react-native";
 import { View } from "@/theme/ui/components/View";
 import { Text } from "@/theme/ui/components/Text";
@@ -41,7 +42,7 @@ export const OnBoarding = () => {
   };
 
   return (
-    <View flex={1} style={{ minHeight: "100%", maxWidth: "100%" }}>
+    <View flex={1} style={styles.container}>
       <View
         mb="xl"
         direction="row"
@@ -49,7 +50,7 @@ export const OnBoarding = () => {
         gap="sm"
         flex={0.2}
         pt="xl"
-        style={{ alignItems: "flex-start" }}
+        style={styles.header}
       >
         <View
           direction="row"
@@ -63,17 +64,12 @@ export const OnBoarding = () => {
             <View
               key={index}
               bg={idx === index ? "main" : "terciary"}
-              style={{
-                height: 14,
-                borderRadius: 12,
-                width: 14,
-                marginHorizontal: 5,
-              }}
+              style={styles.indicator}
             />
           ))}
         </View>
       </View>
-      <View flex={4} style={{ width: "100%" }}>
+      <View flex={4} style={styles.flatListContainer}>
         <FlatList
           ref={flatListRef}
           data={onboardingScreens}
@@ -93,7 +89,7 @@ export const OnBoarding = () => {
           globalPresets={"partialSafeArea"}
           direction="row"
           justify="space-between"
-          style={{ height: "100%", paddingTop: 14 }}
+          style={styles.footer}
         >
           <View flex={idx !== onboardingScreens.length - 1 ? 1 : 0}>
             {idx !== 0 && (
@@ -128,3 +124,26 @@ export const OnBoarding = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    minHeight: "100%",
+    maxWidth: "100%",
+  },
+  header: {
+    alignItems: "flex-start",
+  },
+  indicator: {
+    height: 14,
+    borderRadius: 12,
+    width: 14,
+    marginHorizontal: 5,
+  },
+  flatListContainer: {
+    width: "100%",
+  },
+  footer: {
+    height: "100%",
+    paddingTop: 14,
+  },
+});
