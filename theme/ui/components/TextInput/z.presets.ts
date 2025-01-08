@@ -31,7 +31,8 @@ export const TextInputPresets = (theme: "light" | "dark") =>
     },
     [TextInputPresetsEnum.search]: {
       color: UI.ThemeColorType[theme].text,
-      backgroundColor: UI.ThemeColorType[theme].bgContent,
+      backgroundColor: UI.ThemeColorType[theme].bgContentSecondary,
+      height: 50,
       ...fixedTextInputStyle,
     },
   } as const);

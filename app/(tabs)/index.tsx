@@ -1,7 +1,7 @@
 import { Section } from "@/components/Section";
 import { useEffect } from "react";
 import { useRouter } from "expo-router";
-import { OnBoarding } from "@/screens/onboarding/onboarding.view";
+import React from "react";
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -16,7 +16,7 @@ export default function HomeScreen() {
 
   return (
     <Section>
-      <OnBoarding />
+      <React.Fragment></React.Fragment>
     </Section>
   );
 }

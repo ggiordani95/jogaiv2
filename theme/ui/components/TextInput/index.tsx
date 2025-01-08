@@ -16,7 +16,7 @@ export const TextInput = ({ ...props }: UITextInputProps) => {
   return (
     <>
       {props.icon ? (
-        <View preset="rowCentered">
+        <View direction="row" justify="center" align="center">
           <RTextInput
             style={[textInputPreset, props.style]}
             placeholder={props.placeholder}

@@ -9,6 +9,7 @@ export enum BgPresets {
   error = "error",
   success = "success",
   info = "info",
+  mark = "mark",
 }
 
 export const FixedBgPresets = {
@@ -18,6 +19,7 @@ export const FixedBgPresets = {
   [BgPresets.warning]: UI.Colors.Warning100,
   [BgPresets.success]: UI.Colors.Success100,
   [BgPresets.info]: UI.Colors.Info100,
+  [BgPresets.mark]: UI.Colors.Blue100,
 } as const;
 
 export const bgPresets = (theme: "light" | "dark") =>

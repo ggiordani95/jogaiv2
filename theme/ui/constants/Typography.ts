@@ -16,5 +16,9 @@ export const Typography = {
       Regular: "NetflixSans",
       Bold: "NetflixSansBold",
     },
+    Secondary: {
+      Regular: "DMSans",
+      Bold: "DMSans",
+    },
   },
 };

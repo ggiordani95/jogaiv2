@@ -3,6 +3,7 @@ import { View } from "@/theme/ui/components/View";
 import { Text } from "@/theme/ui/components/Text";
 import { useWindowDimensions } from "react-native";
 import Location from "@/assets/lotties/Location.json";
+import useExpoLocation from "@/hooks/useExpoLocation";
 
 export const TemplateOne = ({
   l1,
@@ -32,7 +33,7 @@ export const TemplateOne = ({
         preset={"h2"}
         color={"primary"}
         text={title}
-        weight="primaryRegular"
+        family="primaryRegular"
       />
       <View mt={"lg"} style={{ maxWidth: 240 }}>
         <View preset="rowStart">
@@ -40,14 +41,14 @@ export const TemplateOne = ({
             preset={"h5"}
             color={masterword === "agendamento" ? "success" : "info"}
             text={masterword}
-            weight="primaryRegular"
+            family="primaryRegular"
           />
         </View>
         <Text
           preset={"h5"}
           color={"secondary"}
           text={l2}
-          weight="primaryRegular"
+          family="primaryRegular"
         />
       </View>
     </View>
@@ -56,6 +57,7 @@ export const TemplateOne = ({
 
 export const CityOnBoarding = () => {
   const width = useWindowDimensions().width;
+
   return (
     <View
       style={{
@@ -71,7 +73,7 @@ export const CityOnBoarding = () => {
         preset={"h2"}
         color={"primary"}
         text={"Escolher cidade"}
-        weight="primaryRegular"
+        family="primaryRegular"
       />
       <View mt={"lg"} style={{ maxWidth: 240 }}>
         <View preset="rowStart">
@@ -79,13 +81,13 @@ export const CityOnBoarding = () => {
             preset={"h5"}
             color={"main"}
             text={"escolha uma cidade para continuar"}
-            weight="primaryRegular"
+            family="primaryRegular"
           />
           <Text
             preset={"h5"}
             color={"secondary"}
             text={"e visualize as melhores arenas da região selecionada"}
-            weight="primaryRegular"
+            family="primaryRegular"
           />
         </View>
       </View>

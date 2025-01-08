@@ -5,7 +5,7 @@ export const Colors = {
   Primary40: "#FFF2DD",
   Black100: "#080808",
   Black80: "#101010",
-  Black60: "#323232",
+  Black60: "#1B1D21",
   Black40: "#606060",
   White100: "#FFFFFF",
   White80: "#F1F1F1",
@@ -23,6 +23,7 @@ export const Colors = {
   Info100: "#2685CA",
   Info80: "#519DD5",
   Info60: "#7DB6DF",
+  Blue100: "#3281FF",
 };
 
 const FixedColors = {

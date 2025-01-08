@@ -9,17 +9,25 @@ export enum TextFontPresetsEnum {
   body = "body",
 }
 
-export enum TextFontWeightPresetsEnum {
+export enum TextFontFamilyPresetsEnum {
   primaryBold = "primaryBold",
   primaryRegular = "primaryRegular",
+  secondaryRegular = "secondaryRegular",
+  secondaryBold = "secondaryBold",
 }
 
-export const TextFontWeightPresets = {
-  [TextFontWeightPresetsEnum.primaryBold]: {
+export const TextFontFamilyPresets = {
+  [TextFontFamilyPresetsEnum.primaryBold]: {
     fontFamily: UI.Typography.FontFamily.Primary.Bold,
   },
-  [TextFontWeightPresetsEnum.primaryRegular]: {
+  [TextFontFamilyPresetsEnum.primaryRegular]: {
     fontFamily: UI.Typography.FontFamily.Primary.Regular,
+  },
+  [TextFontFamilyPresetsEnum.secondaryRegular]: {
+    fontFamily: UI.Typography.FontFamily.Secondary.Regular,
+  },
+  [TextFontFamilyPresetsEnum.secondaryBold]: {
+    fontFamily: UI.Typography.FontFamily.Secondary.Bold,
   },
 };
 

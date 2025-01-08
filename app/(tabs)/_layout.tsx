@@ -1,9 +1,7 @@
 import { Tabs, usePathname } from "expo-router";
 import React from "react";
-
 import { tabsRoutes } from "@/routes/(tabs)/tabsRoutes";
 import { useColorScheme } from "@/styles/hooks/useColorScheme.web";
-import { Colors } from "@/theme/ui/constants/Colors";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();

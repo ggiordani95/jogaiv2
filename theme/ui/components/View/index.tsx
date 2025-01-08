@@ -29,6 +29,7 @@ export const View = ({
   br,
   preset,
   direction,
+  h,
   ...props
 }: UIViewProps) => {
   const colorScheme = useColorScheme();
@@ -73,6 +74,7 @@ export const View = ({
           gap: gap ? Gaps[gap] : 0,
           backgroundColor,
           flex,
+          height: h,
         },
         props.style,
       ]}
@@ -83,6 +85,7 @@ export const View = ({
 };
 
 export type UIViewProps = {
+  h?: ViewStyle["height"];
   preset?: keyof typeof BoxPresets;
   globalPresets?: (keyof typeof GlobalPresets)[] | keyof typeof GlobalPresets;
   style?: ViewStyle;

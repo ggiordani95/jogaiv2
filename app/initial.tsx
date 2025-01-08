@@ -10,36 +10,44 @@ export default function InitialLayout() {
 
   useEffect(() => {
     const inTabsGroup = segments[0] === "(tabs)";
-    const backAction = () => {
-      if (isAuthenticated && !inTabsGroup) {
-        return true;
-      }
-      return false;
-    };
-    const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      backAction
-    );
-    if (isAuthenticated && !inTabsGroup) {
-      router.push("/(tabs)");
-    } else if (!isAuthenticated) {
-      router.push("/(public)/onboarding");
-    }
+    // const backAction = () => {
+    //   if (isAuthenticated && !inTabsGroup) {
+    //     return true;
+    //   }
+    //   return false;
+    // };
+    // const backHandler = BackHandler.addEventListener(
+    //   "hardwareBackPress",
+    //   backAction
+    // );
+    // if (isAuthenticated && !inTabsGroup) {
+    //   router.push("/(tabs)");
+    // } else if (!isAuthenticated) {
+    //   router.push("/onboarding");
+    // }
 
-    return () => backHandler.remove();
-  }, [isAuthenticated]);
+    // return () => backHandler.remove();
+  }, [isAuthenticated, segments]);
 
+  useEffect(() => {
+    router.replace("/onboarding");
+  }, []);
   return (
     <Stack
       screenOptions={{
         headerShown: false,
       }}
     >
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen name="onboarding" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="city"
+        options={{ headerShown: false, presentation: "modal" }}
+      />
+      {/* <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen
         name="(modals)"
         options={{ headerShown: false, presentation: "modal" }}
-      />
+      /> */}
     </Stack>
   );
 }

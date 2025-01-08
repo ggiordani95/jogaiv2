@@ -1,8 +1,11 @@
-type routesNames = "email" | "password" | "register" | "onboarding";
+type routesNames = "email" | "password" | "register" | "onboarding" | "city";
 
 export const publicRoutes: publicRoutesTypes[] = [
   {
     name: "onboarding",
+  },
+  {
+    name: "city",
   },
   {
     name: "email",
