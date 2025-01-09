@@ -7,6 +7,8 @@ export default function useExpoLocation() {
   const [location, setLocation] = useState<Location.LocationObject | null>(
     null
   );
+  const [address, setAddress] =
+    useState<Location.LocationGeocodedAddress | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   useEffect(() => {
@@ -17,18 +19,33 @@ export default function useExpoLocation() {
         );
         return;
       }
+
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
         setErrorMsg("Permission to access location was denied");
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
+      try {
+        let currentLocation = await Location.getCurrentPositionAsync({});
+        setLocation(currentLocation);
+
+        // Reverse Geocoding to get city and address details
+        let geocodedAddress = await Location.reverseGeocodeAsync({
+          latitude: currentLocation.coords.latitude,
+          longitude: currentLocation.coords.longitude,
+        });
+
+        if (geocodedAddress.length > 0) {
+          setAddress(geocodedAddress[0]); // Set the first result as the address
+        }
+      } catch (error) {
+        setErrorMsg("An error occurred while fetching location details.");
+      }
     }
 
     getCurrentLocation();
   }, []);
 
-  return { errorMsg, location };
+  return { errorMsg, location, address };
 }

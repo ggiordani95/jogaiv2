@@ -6,8 +6,10 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import InitialLayout from "./initial";
 import "@/global.css";
 import CustomSplashScreen from "./splashscreen";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 SplashScreen.preventAutoHideAsync();
+const queryClient = new QueryClient();
 
 export default function RootLayout() {
   const [loaded] = useFonts({
@@ -30,7 +32,9 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <InitialLayout />
+      <QueryClientProvider client={queryClient}>
+        <InitialLayout />
+      </QueryClientProvider>
     </GestureHandlerRootView>
   );
 }
