@@ -16,12 +16,6 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { Colors } from "@/constants/Colors";
-import { useFilterThemeColor } from "@/styles/hooks/useFilterThemeColor";
-import { Borders } from "@/constants/Borders";
-import { BoxSizes } from "@/constants/BoxSizes";
-import { Spacing } from "@/constants/Spacing";
-import { FontSizes } from "@/constants/FontSizes";
 import { SpacedView } from "./SpacedView";
 
 type TSearchFilter = {
@@ -29,18 +23,15 @@ type TSearchFilter = {
   headerComponent?: JSX.Element;
 } & TextInputProps;
 
-const SearchInputHeight = BoxSizes.medium;
+const SearchInputHeight = 60;
+const SpaceFromTop = 60;
 
 export default function SearchFilter({
   bgColorVariant,
   headerComponent,
+  placeholder = "Pesquisar",
   ...rest
 }: TSearchFilter): JSX.Element {
-  const { color } = useFilterThemeColor(
-    bgColorVariant as keyof typeof Colors.light | keyof typeof Colors.dark,
-    "bgContentPrimary"
-  );
-
   const [searchFilterIsShown, setSearchFilterIsShown] = useState(false);
   const [headerHeight, setHeaderHeight] = useState(0);
   const searchInputRef = useRef<TextInput>(null);
@@ -64,6 +55,7 @@ export default function SearchFilter({
 
   return (
     <>
+      <View style={{ marginTop: SpaceFromTop }} />
       <SpacedView
         onLayout={(event) => {
           const { height } = event.nativeEvent.layout;
@@ -80,9 +72,9 @@ export default function SearchFilter({
           animatedStyle,
           styles.rowCentered,
           {
-            paddingHorizontal: Spacing.small,
+            paddingHorizontal: 14,
             position: searchFilterIsShown ? "absolute" : "relative",
-            top: searchFilterIsShown ? headerHeight + 20 : 0,
+            top: searchFilterIsShown ? SpaceFromTop + 10 : 0,
             flex: 1,
             elevation: 3,
             zIndex: 99,
@@ -90,23 +82,24 @@ export default function SearchFilter({
         ]}
       >
         <SearchBar
+          placeholder={placeholder}
           animationProps={{
             position: searchBarPosition,
             opacity: searchBarOpacity,
-            width: searchBarWidth,
+            width: searchBarWidth as any,
             headerHeight,
           }}
           isFocused={handleFocus}
           inputRef={searchInputRef}
-          bgColorVariant={color}
+          bgColorVariant={"red"}
           {...rest}
         />
         {searchFilterIsShown && (
-          <TouchableOpacity onPress={() => ""}>
+          <TouchableOpacity onPress={() => handleClose()}>
             <ThemedText
               colorVariant="action"
               weight="regular"
-              style={{ paddingRight: Spacing.medium }}
+              style={{ paddingRight: 14 }}
             >
               Cancelar
             </ThemedText>
@@ -127,6 +120,7 @@ type TSearchBar = {
   isFocused: (isFocused: boolean) => void;
   inputRef: React.RefObject<TextInput>;
   bgColorVariant: string;
+  placeholder: string;
 } & TextInputProps;
 
 const SearchBar = ({
@@ -134,6 +128,7 @@ const SearchBar = ({
   isFocused,
   inputRef,
   bgColorVariant,
+  placeholder,
   ...rest
 }: TSearchBar) => {
   const [text, setText] = useState<string>("");
@@ -188,16 +183,11 @@ const SearchBar = ({
   return (
     <Animated.View style={[styles.searchContainer, animatedStyle]}>
       <TextInput
-        placeholder="Pesquisar pelo nome da arena"
+        placeholder={placeholder}
         onChangeText={(e) => setText(e)}
         value={text}
-        style={[
-          styles.searchInput,
-          {
-            backgroundColor: bgColorVariant,
-            color: Colors[colorScheme ?? "light"].text,
-          },
-        ]}
+        className="bg-foreground color-text"
+        style={[styles.searchInput]}
         {...rest}
         onFocus={handleFocus}
         onBlur={handleBlur}
@@ -224,7 +214,7 @@ const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: "row",
     alignItems: "center",
-    gap: Spacing.xsmall,
+    gap: 14,
   },
   rowCentered: {
     flexDirection: "row",
@@ -234,15 +224,15 @@ const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginHorizontal: Spacing.small,
+    marginHorizontal: 14,
     position: "relative",
   },
   searchInput: {
     height: SearchInputHeight,
-    borderRadius: Borders.radiusLarge,
-    marginVertical: Spacing.xsmall,
-    paddingHorizontal: Spacing.small,
-    fontSize: FontSizes.medium,
+    borderRadius: 24,
+    marginVertical: 14,
+    paddingHorizontal: 14,
+    fontSize: 16,
     width: "100%",
   },
   closeRounded: {
@@ -250,6 +240,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     justifyContent: "center",
     alignItems: "center",
-    right: Spacing.small,
+    right: 14,
   },
 });

@@ -1,33 +1,32 @@
-import { View, ScrollView } from "react-native";
-import { ThemedText } from "@/components/ThemedText";
-import SearchFilter from "@/components/SearchFilter";
-import { ScrollList } from "@/components/ScrollList";
-import LottieComponent from "@/components/LottieComponent";
-import Sports from "@/assets/lotties/sports.json";
-import Calendar from "@/assets/lotties/calendar.json";
-import SliderLottieComponent from "@/components/SliderLottieComponent";
-
 import { Section } from "@/components/Section";
+import { useEffect } from "react";
+import { useRouter } from "expo-router";
+import React from "react";
+import { TextInput } from "@/theme/ui/components/TextInput";
+import { View } from "@/theme/ui/components/View";
 
 export default function HomeScreen() {
+  const router = useRouter();
+  const isAuthenticated = false;
+
+  useEffect(() => {
+    if (isAuthenticated) return;
+    setTimeout(() => {
+      router.push("/(modals)/login");
+    }, 1000);
+  }, []);
+
   return (
     <Section>
-      <ScrollView>
-        <View style={{ marginTop: 60 }}></View>
-        <SearchFilter
-          bgColorVariant="bgContentPrimary"
-          headerComponent={
-            <>
-              <ThemedText variant="large" weight="bold">
-                Buscar
-              </ThemedText>
-            </>
-          }
-        />
-
-        <ScrollList />
-      </ScrollView>
-      {/* <SliderLottieComponent source={Sports} source2={Calendar} /> */}
+      <View direction="column" justify="space-between" h={"100%"}>
+        <View globalPresets="partialSafeArea">
+          <TextInput
+            preset={"default"}
+            placeholder={"Buscar arena"}
+            onChangeText={() => ""}
+          />
+        </View>
+      </View>
     </Section>
   );
 }

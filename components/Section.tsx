@@ -1,5 +1,8 @@
-import { useThemeColor } from "@/styles/hooks/useThemeColor";
+import { UI } from "@/theme/ui/constants/UIConstants";
+import { LinearGradient } from "expo-linear-gradient";
+import { colorScheme } from "nativewind";
 import { View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 interface SectionProps {
   children: React.ReactNode;
@@ -7,11 +10,19 @@ interface SectionProps {
 }
 
 export const Section = ({ children, style }: SectionProps) => {
-  const background = useThemeColor({}, "background");
+  const useColorScheme = colorScheme.get();
   return (
-    <View style={[styles.section, style, { backgroundColor: background }]}>
-      {children}
-    </View>
+    <LinearGradient
+      className="flex h-full w-screen"
+      colors={
+        useColorScheme == "dark"
+          ? [UI.Colors.Black80, UI.Colors.Black100]
+          : [UI.Colors.White100, UI.Colors.White80]
+      }
+      style={{ flex: 1 }}
+    >
+      <SafeAreaView>{children}</SafeAreaView>
+    </LinearGradient>
   );
 };
 

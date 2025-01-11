@@ -1,34 +1,29 @@
-import { useThemeColor } from "@/styles/hooks/useThemeColor";
 import { TouchableOpacity, TouchableOpacityProps } from "react-native";
 import { ThemedText } from "./ThemedText";
-import { Spacing } from "@/constants/Spacing";
 
 type ThemedViewProps = TouchableOpacityProps & {
   lightColor?: string;
   darkColor?: string;
   label: string;
+  image?: JSX.Element;
 };
 
 export const ThemedTouchable = ({ ...props }: ThemedViewProps) => {
-  const bgColor = useThemeColor(
-    { light: props.lightColor, dark: props.darkColor },
-    "bgContentPrimary"
-  );
-
   return (
     <TouchableOpacity
       style={[
         styles.container,
         {
-          backgroundColor: bgColor,
+          backgroundColor: "red",
+          alignItems: "center",
+          flexDirection: "row",
+          gap: 16,
         },
       ]}
     >
-      <ThemedText
-        variant="medium"
-        weight="regular"
-        colorVariant="textSecondary"
-      >
+      {props.image && props.image}
+
+      <ThemedText variant="medium" weight="medium" colorVariant="textSecondary">
         {props.label}
       </ThemedText>
     </TouchableOpacity>
@@ -37,8 +32,9 @@ export const ThemedTouchable = ({ ...props }: ThemedViewProps) => {
 
 const styles = {
   container: {
-    borderRadius: 10,
-    padding: Spacing.xsmall,
-    marginRight: 6,
+    borderRadius: 12,
+    marginRight: 14,
+    height: 60,
+    marginTop: 10,
   },
 };

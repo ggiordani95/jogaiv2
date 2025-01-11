@@ -2,15 +2,15 @@
   "expo": {
     "name": "ggiordani-boilerplate",
     "slug": "ggiordani-boilerplate",
-    "version": "1.0.0",
     "orientation": "portrait",
+    "newArchEnabled": true,
+
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "image": "./assets/images/jogai.png",
+      "backgroundColor": "#101010"
     },
     "ios": {
       "supportsTablet": true,
@@ -28,7 +28,13 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Permitir $(PRODUCT_NAME) de usar sua localização atual."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
