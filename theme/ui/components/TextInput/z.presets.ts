@@ -4,6 +4,7 @@ export enum TextInputPresetsEnum {
   default = "default",
   variant = "variant",
   search = "search",
+  defaultError = "defaultError",
 }
 
 const fixedTextInputStyle = {
@@ -19,6 +20,16 @@ export const TextInputPresets = (theme: "light" | "dark") =>
       width: "100%",
       fontSize: 18,
       backgroundColor: UI.ThemeColorType[theme].bgContentSecondary,
+      ...fixedTextInputStyle,
+    },
+    [TextInputPresetsEnum.defaultError]: {
+      color: UI.Colors.Error100,
+      height: 46,
+      width: "100%",
+      fontSize: 18,
+      borderColor: UI.Colors.Error80,
+      borderWidth: 1,
+      backgroundColor: UI.Colors.Error60,
       ...fixedTextInputStyle,
     },
     [TextInputPresetsEnum.variant]: {

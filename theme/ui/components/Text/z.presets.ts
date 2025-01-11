@@ -51,7 +51,7 @@ export const TextFontPresets = {
     color: UI.Colors.White100,
   },
   [TextFontPresetsEnum.body]: {
-    fontSize: UI.Typography.FontSize.md,
+    fontSize: UI.Typography.FontSize.lg,
     color: UI.Colors.White100,
   },
 } as const;

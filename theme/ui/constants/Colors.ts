@@ -14,9 +14,9 @@ export const Colors = {
   Success100: "#3F845F",
   Success80: "#6EBF8D",
   Success60: "#8CB59F",
-  Error100: "#D0021B",
-  Error80: "#E06B7D",
-  Error60: "#E8A0A8",
+  Error100: "#A35F5F",
+  Error80: "#603636",
+  Error60: "#2A1616",
   Warning100: "#FFBE55",
   Warning80: "#E9D17C",
   Warning60: "#EFDD9D",
@@ -38,6 +38,8 @@ const FixedColors = {
   warningSecondary: Colors.Warning60,
   info: Colors.Info100,
   infoSecondary: Colors.Info60,
+  error: Colors.Error100,
+  errorSecondary: Colors.Error60,
 };
 
 export const DarkTheme = {

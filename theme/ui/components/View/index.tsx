@@ -1,7 +1,7 @@
 import { View as RNView, useColorScheme, ViewStyle } from "react-native";
 import { Gaps, GapsEnum } from "../../constants/Spacing";
 import { UIGlobal } from "../../presets/UIGlobal";
-import { GlobalPresets, globalPresets } from "../../presets/global";
+import { global, globalEnum } from "../../presets/global";
 import { SpacingPresets } from "../../presets/spacing";
 import { bgPresets, BgPresets } from "../../presets/bg";
 import { radiusPresets, RadiusPresets } from "../../presets/radius";
@@ -30,15 +30,17 @@ export const View = ({
   preset,
   direction,
   h,
+  w,
+  pos,
   ...props
 }: UIViewProps) => {
   const colorScheme = useColorScheme();
   const presetStyle = preset ? boxPresets[preset] : {};
   const radiusStyle = br ? radiusPresets?.[br] : {};
-  const globalPresetsStyles = props.globalPresets
-    ? Array.isArray(props.globalPresets)
-      ? props.globalPresets.map((p) => globalPresets[p])
-      : [globalPresets[props.globalPresets]]
+  const globalStyles = props.global
+    ? Array.isArray(props.global)
+      ? props.global.map((p) => global[p])
+      : [global[props.global]]
     : [];
   const marginStyles = {
     ...(mt ? UIGlobal.mt[mt] : {}),
@@ -61,7 +63,7 @@ export const View = ({
   return (
     <RNView
       style={[
-        ...globalPresetsStyles,
+        ...globalStyles,
         marginStyles,
         paddingStyles,
         radiusStyle,
@@ -70,11 +72,13 @@ export const View = ({
           flexDirection: direction,
           justifyContent: justify,
           alignItems: align,
+          position: pos,
           padding,
           gap: gap ? Gaps[gap] : 0,
           backgroundColor,
           flex,
           height: h,
+          width: w,
         },
         props.style,
       ]}
@@ -86,8 +90,10 @@ export const View = ({
 
 export type UIViewProps = {
   h?: ViewStyle["height"];
+  w?: ViewStyle["width"];
+  pos?: ViewStyle["position"];
   preset?: keyof typeof BoxPresets;
-  globalPresets?: (keyof typeof GlobalPresets)[] | keyof typeof GlobalPresets;
+  global?: (keyof typeof globalEnum)[] | keyof typeof globalEnum;
   style?: ViewStyle;
   children?: JSX.Element | React.ReactNode;
   padding?: number;

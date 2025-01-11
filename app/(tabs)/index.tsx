@@ -19,7 +19,7 @@ export default function HomeScreen() {
   return (
     <Section>
       <View direction="column" justify="space-between" h={"100%"}>
-        <View globalPresets="partialSafeArea">
+        <View global="partialSafeArea">
           <TextInput
             preset={"default"}
             placeholder={"Buscar arena"}

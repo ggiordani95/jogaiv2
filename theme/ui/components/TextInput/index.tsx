@@ -21,6 +21,7 @@ export const TextInput = ({ ...props }: UITextInputProps) => {
             style={[textInputPreset, props.style]}
             placeholder={props.placeholder}
             onChangeText={props.onChangeText}
+            value={props.value}
           />
         </View>
       ) : (
@@ -28,6 +29,7 @@ export const TextInput = ({ ...props }: UITextInputProps) => {
           style={[textInputPreset, props.style]}
           placeholder={props.placeholder}
           onChangeText={props.onChangeText}
+          value={props.value}
         />
       )}
     </>
@@ -39,5 +41,6 @@ export type UITextInputProps = {
   style?: TextStyle;
   icon?: string;
   placeholder: string;
+  value?: string;
   onChangeText: (text: string) => void;
 };

@@ -91,7 +91,7 @@ export const OnBoarding = () => {
           <View bg={"secondary"} style={{ width: width, height: 1 }}></View>
           <View
             flex={1}
-            globalPresets={"partialSafeArea"}
+            global={"partialSafeArea"}
             direction="row"
             justify="space-between"
             style={styles.footer}

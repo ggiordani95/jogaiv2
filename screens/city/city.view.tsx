@@ -25,7 +25,7 @@ export default function City() {
           </View>
         ) : (
           <React.Fragment>
-            <View globalPresets="partialSafeArea">
+            <View global="partialSafeArea">
               <TextInput
                 placeholder="Digite o nome da cidade"
                 preset={"default"}

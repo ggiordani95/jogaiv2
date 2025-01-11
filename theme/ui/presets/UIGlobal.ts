@@ -18,7 +18,7 @@ type UIGlobalType = {
   py: Record<SpacingPresets, ViewStyle>;
 };
 
-export enum UIGlobalPresets {
+export enum UIglobal {
   margin = "margin",
   mt = "mt",
   mb = "mb",
@@ -36,46 +36,46 @@ export enum UIGlobalPresets {
 }
 
 export const UIGlobal: UIGlobalType = {
-  [UIGlobalPresets.margin]: {
+  [UIglobal.margin]: {
     ...marginPresets("margin"),
   },
-  [UIGlobalPresets.mt]: {
+  [UIglobal.mt]: {
     ...marginPresets("marginTop"),
   },
-  [UIGlobalPresets.mb]: {
+  [UIglobal.mb]: {
     ...marginPresets("marginBottom"),
   },
-  [UIGlobalPresets.ml]: {
+  [UIglobal.ml]: {
     ...marginPresets("marginLeft"),
   },
-  [UIGlobalPresets.mr]: {
+  [UIglobal.mr]: {
     ...marginPresets("marginRight"),
   },
-  [UIGlobalPresets.mx]: {
+  [UIglobal.mx]: {
     ...marginPresets("marginHorizontal"),
   },
-  [UIGlobalPresets.my]: {
+  [UIglobal.my]: {
     ...marginPresets("marginVertical"),
   },
-  [UIGlobalPresets.padding]: {
+  [UIglobal.padding]: {
     ...paddingPresets("padding"),
   },
-  [UIGlobalPresets.pt]: {
+  [UIglobal.pt]: {
     ...paddingPresets("paddingTop"),
   },
-  [UIGlobalPresets.pb]: {
+  [UIglobal.pb]: {
     ...paddingPresets("paddingBottom"),
   },
-  [UIGlobalPresets.pl]: {
+  [UIglobal.pl]: {
     ...paddingPresets("paddingLeft"),
   },
-  [UIGlobalPresets.pr]: {
+  [UIglobal.pr]: {
     ...paddingPresets("paddingRight"),
   },
-  [UIGlobalPresets.px]: {
+  [UIglobal.px]: {
     ...paddingPresets("paddingHorizontal"),
   },
-  [UIGlobalPresets.py]: {
+  [UIglobal.py]: {
     ...paddingPresets("paddingVertical"),
   },
 };

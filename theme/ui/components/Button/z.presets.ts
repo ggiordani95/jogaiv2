@@ -7,11 +7,11 @@ export enum ButtonPresetsEnum {
 
 export const ButtonPresets = {
   [ButtonPresetsEnum.primary]: {
-    height: 51,
+    height: 45,
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 18,
+    borderRadius: 8,
     backgroundColor: UI.Colors.Primary100,
   },
   [ButtonPresetsEnum.variant]: {
@@ -23,7 +23,7 @@ export const ButtonPresets = {
 
 export const ButtonTextPresets = {
   [ButtonPresetsEnum.primary]: {
-    fontSize: UI.Typography.FontSize.xl,
+    fontSize: UI.Typography.FontSize.lg,
     fontFamily: UI.Typography.FontFamily.Primary.Regular,
   },
   [ButtonPresetsEnum.variant]: {

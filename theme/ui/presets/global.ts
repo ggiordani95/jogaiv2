@@ -1,19 +1,19 @@
 import { Spacing } from "../constants/Spacing";
 
-export enum GlobalPresets {
+export enum globalEnum {
   safeArea = "safeArea",
   safeAreaLeft = "safeAreaLeft",
   partialSafeArea = "partialSafeArea",
 }
 
-export const globalPresets = {
-  [GlobalPresets.safeArea]: {
+export const global = {
+  [globalEnum.safeArea]: {
     margin: Spacing.lg,
   },
-  [GlobalPresets.safeAreaLeft]: {
+  [globalEnum.safeAreaLeft]: {
     marginLeft: Spacing.lg,
   },
-  [GlobalPresets.partialSafeArea]: {
+  [globalEnum.partialSafeArea]: {
     marginTop: Spacing.lg,
     marginLeft: Spacing.lg,
     marginRight: Spacing.lg,

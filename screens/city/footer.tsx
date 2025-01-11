@@ -65,11 +65,12 @@ export const Footer = () => {
         />
       </View>
       <CityItem city={city} />
-      <View globalPresets={"partialSafeArea"}>
+      <View global={"partialSafeArea"}>
         <Button
           onPress={() => handleConfirmCity()}
           preset={"primary"}
           text={"Confirmar cidade"}
+          isLoading={false}
         />
       </View>
     </Animated.View>

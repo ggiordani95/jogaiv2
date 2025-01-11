@@ -1,9 +1,6 @@
 import { api } from "../api";
 
-export type EmailCodeResponse =
-  | "USER_NOT_FOUND"
-  | "REGISTERED_WITH_PASSWORD"
-  | "USER_ERROR";
+export type EmailCodeResponse = "USER_NOT_FOUND" | "REGISTERED_WITH_PASSWORD";
 
 export type EmailResponse = Readonly<{
   message: string;
