@@ -5,6 +5,8 @@ import {
   useColorScheme,
   useWindowDimensions,
   StyleSheet,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
 } from "react-native";
 import { View } from "@/theme/ui/components/View";
 import { Text } from "@/theme/ui/components/Text";
@@ -25,7 +27,6 @@ export const OnBoarding = () => {
     if (idx < onboardingScreens.length - 1) {
       const nextIndex = idx + 1;
       flatListRef.current?.scrollToIndex({ index: nextIndex, animated: true });
-      setIdx(nextIndex);
     }
   };
 
@@ -33,7 +34,15 @@ export const OnBoarding = () => {
     if (idx > 0) {
       const nextIndex = idx - 1;
       flatListRef.current?.scrollToIndex({ index: nextIndex, animated: true });
-      setIdx(nextIndex);
+    }
+  };
+
+  const handleMomentumScrollEnd = (
+    event: NativeSyntheticEvent<NativeScrollEvent>
+  ) => {
+    const newIndex = Math.round(event.nativeEvent.contentOffset.x / width);
+    if (newIndex !== idx) {
+      setIdx(newIndex);
     }
   };
 
@@ -77,6 +86,7 @@ export const OnBoarding = () => {
             renderItem={({ item }) => (
               <React.Fragment>{item.component}</React.Fragment>
             )}
+            onMomentumScrollEnd={handleMomentumScrollEnd}
           />
           <View bg={"secondary"} style={{ width: width, height: 1 }}></View>
           <View

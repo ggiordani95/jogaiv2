@@ -2,10 +2,12 @@ import { Section } from "@/components/Section";
 import { useEffect } from "react";
 import { useRouter } from "expo-router";
 import React from "react";
+import { TextInput } from "@/theme/ui/components/TextInput";
+import { View } from "@/theme/ui/components/View";
 
 export default function HomeScreen() {
   const router = useRouter();
-  const isAuthenticated = true;
+  const isAuthenticated = false;
 
   useEffect(() => {
     if (isAuthenticated) return;
@@ -16,7 +18,15 @@ export default function HomeScreen() {
 
   return (
     <Section>
-      <React.Fragment></React.Fragment>
+      <View direction="column" justify="space-between" h={"100%"}>
+        <View globalPresets="partialSafeArea">
+          <TextInput
+            preset={"default"}
+            placeholder={"Buscar arena"}
+            onChangeText={() => ""}
+          />
+        </View>
+      </View>
     </Section>
   );
 }

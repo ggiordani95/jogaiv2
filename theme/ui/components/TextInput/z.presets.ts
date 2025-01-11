@@ -7,7 +7,7 @@ export enum TextInputPresetsEnum {
 }
 
 const fixedTextInputStyle = {
-  borderRadius: 12,
+  borderRadius: 6,
   paddingLeft: 14,
 };
 
@@ -15,8 +15,9 @@ export const TextInputPresets = (theme: "light" | "dark") =>
   ({
     [TextInputPresetsEnum.default]: {
       color: UI.ThemeColorType[theme].text,
-      height: 60,
+      height: 46,
       width: "100%",
+      fontSize: 18,
       backgroundColor: UI.ThemeColorType[theme].bgContentSecondary,
       ...fixedTextInputStyle,
     },

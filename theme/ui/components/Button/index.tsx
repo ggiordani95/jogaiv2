@@ -8,7 +8,10 @@ import {
 
 export const Button = ({ ...props }: UIButtonProps) => {
   return (
-    <TouchableOpacity style={[ButtonPresets[props.preset], props.style]}>
+    <TouchableOpacity
+      style={[ButtonPresets[props.preset], props.style]}
+      onPress={props.onPress}
+    >
       <Text style={[ButtonTextPresets[props.preset]]}>{props.text}</Text>
     </TouchableOpacity>
   );
@@ -16,6 +19,7 @@ export const Button = ({ ...props }: UIButtonProps) => {
 
 export type UIButtonProps = {
   preset: keyof typeof ButtonPresetsEnum;
+  onPress: () => void;
   text: string;
   style?: ViewStyle;
 };

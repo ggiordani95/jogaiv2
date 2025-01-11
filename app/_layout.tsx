@@ -7,6 +7,7 @@ import InitialLayout from "./initial";
 import "@/global.css";
 import CustomSplashScreen from "./splashscreen";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import "react-native-get-random-values";
 
 SplashScreen.preventAutoHideAsync();
 const queryClient = new QueryClient();
