@@ -9,7 +9,7 @@ export const Colors = {
   Black40: "#606060",
   White100: "#FFFFFF",
   White80: "#F1F1F1",
-  White60: "#6e6e6e",
+  White60: "#DCDCDC",
   White40: "#727272",
   Success100: "#3F845F",
   Success80: "#6EBF8D",
@@ -49,6 +49,7 @@ export const DarkTheme = {
   bg: Colors.Black100,
   bgContent: Colors.Black80,
   bgContentSecondary: Colors.Black60,
+  disabled: "#424242",
 };
 
 export const LightTheme = {
@@ -58,6 +59,7 @@ export const LightTheme = {
   bg: Colors.White100,
   bgContent: Colors.White80,
   bgContentSecondary: Colors.White60,
+  disabled: "#989898",
 };
 
 export const ThemeColorType = {

@@ -2,7 +2,7 @@ import { View } from "@/theme/ui/components/View";
 import { Text } from "@/theme/ui/components/Text";
 import { TextInput } from "@/theme/ui/components/TextInput";
 import { Button } from "@/theme/ui/components/Button";
-import { TouchableOpacity, StyleSheet } from "react-native";
+import { TouchableOpacity, StyleSheet, useColorScheme } from "react-native";
 import { Image } from "expo-image";
 import { useLoginEmail } from "@/hooks/useLoginEmail";
 import { useRedirectByEmailResponse } from "@/hooks/useLoginRedirect";
@@ -18,9 +18,10 @@ export const LoginHero = () => {
   const handleRefetch = () => {
     refetch();
   };
+  const colorScheme = useColorScheme();
 
   return (
-    <View w="100%" gap="xl" flex={13}>
+    <View w="100%" gap="xl" flex={15}>
       <View gap="lg" mt="sm">
         <TextInput
           preset={isError ? "defaultError" : "default"}
@@ -44,7 +45,13 @@ export const LoginHero = () => {
           />
           <View flex={1} h={2} bg="terciary" />
         </View>
-        <TouchableOpacity onPress={() => ""} style={styles.googleButton}>
+        <TouchableOpacity
+          onPress={() => ""}
+          style={[
+            styles.googleButton,
+            { backgroundColor: colorScheme === "dark" ? "#3a3a3a" : "#cfcfcf" },
+          ]}
+        >
           <View pos="absolute" ml="xl">
             <Image
               source={require("@/assets/images/logogoogle.png")}
@@ -69,7 +76,6 @@ const styles = StyleSheet.create({
   googleButton: {
     height: 45,
     borderRadius: 8,
-    backgroundColor: "#3a3a3a",
     flexDirection: "row",
     alignItems: "center",
   },

@@ -1,22 +1,20 @@
 import { View } from "@/theme/ui/components/View";
-import { Text } from "@/theme/ui/components/Text";
-import { LinearGradient } from "expo-linear-gradient";
 import { PasswordHeader } from "./header";
 import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import { PasswordHero } from "./hero";
+import { ModalBackground } from "@/components/ModalBackground";
 
-export const Password = () => {
+export const Password = ({ email }: { email: string }) => {
   const queryClient = useQueryClient();
   useEffect(() => {
     queryClient.invalidateQueries({
       queryKey: ["email"],
     });
   }, []);
+
   return (
-    <LinearGradient
-      colors={["rgb(22, 22, 22)", "rgb(13, 13, 13)", "#0d121a"]}
-      style={{ flex: 1 }}
-    >
+    <ModalBackground>
       <View
         global={"partialSafeArea"}
         direction="column"
@@ -25,9 +23,9 @@ export const Password = () => {
         flex={1}
       >
         <PasswordHeader />
-        {/* <PasswordHero /> */}
+        <PasswordHero email={email} />
         <View flex={1}></View>
       </View>
-    </LinearGradient>
+    </ModalBackground>
   );
 };

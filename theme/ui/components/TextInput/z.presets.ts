@@ -5,6 +5,7 @@ export enum TextInputPresetsEnum {
   variant = "variant",
   search = "search",
   defaultError = "defaultError",
+  disabled = "disabled",
 }
 
 const fixedTextInputStyle = {
@@ -45,6 +46,14 @@ export const TextInputPresets = (theme: "light" | "dark") =>
       color: UI.ThemeColorType[theme].text,
       backgroundColor: UI.ThemeColorType[theme].bgContentSecondary,
       height: 50,
+      ...fixedTextInputStyle,
+    },
+    [TextInputPresetsEnum.disabled]: {
+      color: "#f7f7f7",
+      height: 46,
+      width: "100%",
+      fontSize: 18,
+      backgroundColor: UI.ThemeColorType[theme].disabled,
       ...fixedTextInputStyle,
     },
   } as const);

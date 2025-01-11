@@ -1,71 +1,67 @@
 import { View } from "@/theme/ui/components/View";
-import { Text } from "@/theme/ui/components/Text";
 import { TextInput } from "@/theme/ui/components/TextInput";
+import { Text } from "@/theme/ui/components/Text";
 import { Button } from "@/theme/ui/components/Button";
-import { TouchableOpacity, StyleSheet } from "react-native";
-import { Image } from "expo-image";
-import { useState } from "react";
-import { useLoginEmail } from "@/hooks/useLoginEmail";
-import { useRedirectByEmailResponse } from "@/hooks/useLoginRedirect";
+import { useEffect, useRef, useState } from "react";
+import { TouchableOpacity, useColorScheme } from "react-native";
+import { useRouter } from "expo-router";
 
-export const LoginHero = () => {
-  const [email, setEmail] = useState<string>("");
+export const PasswordHero = ({ email }: { email: string }) => {
+  const [password, setPassword] = useState<string>("");
+  const passwordRef = useRef<any>(null);
 
-  const { refetch, data, isError, isLoading } = useLoginEmail({ email });
+  const colorScheme = useColorScheme();
 
-  const {} = useRedirectByEmailResponse({ data, email });
+  const router = useRouter();
+
+  useEffect(() => {
+    if (passwordRef.current) {
+      passwordRef.current.focus();
+    }
+  }, []);
 
   return (
-    <View w="100%" gap="xl" flex={13}>
-      <View gap="lg" mt="sm">
+    <View w="100%" gap="xl" flex={14}>
+      <View gap="md">
+        <Text
+          preset={"body"}
+          color={"secondary"}
+          family={"primaryRegular"}
+          text={"Parece que você já possui uma conta."}
+        />
         <TextInput
-          preset={isError ? "defaultError" : "default"}
+          preset={"disabled"}
           placeholder={"Digite seu email"}
-          onChangeText={(e) => setEmail(e.toLocaleLowerCase())}
+          onChangeText={() => ""}
+          enabled={false}
+          value={email}
         />
-        <Button
-          preset={"primary"}
-          onPress={refetch}
-          isLoading={isLoading}
-          text={"Continuar"}
+        <TextInput
+          preset={"default"}
+          placeholder={"Digite sua senha"}
+          onChangeText={() => ""}
+          ref={passwordRef}
+          value={password}
         />
-        <View direction="row" gap="md" align="center">
-          <View flex={1} h={2} bg="terciary" />
-          <Text
-            preset={"body"}
-            color={"primary"}
-            family={"primaryRegular"}
-            text={"ou"}
-          />
-          <View flex={1} h={2} bg="terciary" />
-        </View>
-        <TouchableOpacity onPress={() => ""} style={styles.googleButton}>
-          <View pos="absolute" ml="xl">
-            <Image
-              source={require("@/assets/images/logogoogle.png")}
-              style={{ width: 20, height: 20 }}
-            />
-          </View>
-          <View w={"100%"} align="center" style={{ opacity: 0.8 }}>
+        <TouchableOpacity
+          onPress={() => router.push("/(modals)/login/forgot-password")}
+        >
+          <View w="100%" mb="xs">
             <Text
               preset={"body"}
-              color={"primary"}
+              color={colorScheme === "dark" ? "main" : "primary"}
               family={"primaryRegular"}
-              text={"Continuar com Google"}
+              text={"Esqueceu a senha?"}
             />
           </View>
         </TouchableOpacity>
+        <Button
+          preset={"primary"}
+          onPress={() => null}
+          isLoading={false}
+          text={"Continuar"}
+        />
       </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  googleButton: {
-    height: 45,
-    borderRadius: 8,
-    backgroundColor: "#3a3a3a",
-    flexDirection: "row",
-    alignItems: "center",
-  },
-});
