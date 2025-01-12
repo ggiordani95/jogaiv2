@@ -1,4 +1,5 @@
 import { getOnboardingDoneLocalStorage } from "@/stores/local-storage/onboarding";
+import { useCityStore } from "@/stores/zustand/city";
 import { Stack, useRouter, useSegments } from "expo-router";
 import { useEffect } from "react";
 import { BackHandler } from "react-native";
@@ -6,6 +7,7 @@ import { BackHandler } from "react-native";
 export default function InitialLayout() {
   const segments = useSegments();
   const router = useRouter();
+  const initializeCity = useCityStore((state) => state.initializeCity);
 
   const isOnboardingDone = async () => {
     const isOnboardingDone = await getOnboardingDoneLocalStorage();
@@ -30,6 +32,7 @@ export default function InitialLayout() {
       backAction
     );
     isOnboardingDone();
+    initializeCity();
 
     return () => backHandler.remove();
   }, []);

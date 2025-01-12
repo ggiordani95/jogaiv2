@@ -45,7 +45,7 @@ const FixedColors = {
 export const DarkTheme = {
   ...FixedColors,
   text: Colors.White100,
-  textSecondary: Colors.White60,
+  textSecondary: Colors.White40,
   bg: Colors.Black100,
   bgContent: Colors.Black80,
   bgContentSecondary: Colors.Black60,

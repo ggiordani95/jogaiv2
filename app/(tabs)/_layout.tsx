@@ -1,12 +1,12 @@
 import { Tabs, usePathname } from "expo-router";
-import React from "react";
+import React, { useMemo } from "react";
 import { tabsRoutes } from "@/routes/(tabs)/tabsRoutes";
-import { useColorScheme } from "@/styles/hooks/useColorScheme.web";
+import { UI } from "@/theme/ui/constants/UIConstants";
+import { useColorScheme, View } from "react-native";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const colorScheme = useColorScheme() as "light" | "dark";
   const currentPath = usePathname();
-
   const hideTabBarScreens = ["(modals)"];
 
   function visibleHandler(name: string) {
@@ -17,14 +17,14 @@ export default function TabLayout() {
     }
   }
 
+  const theme = useMemo(() => UI.ThemeColorType[colorScheme], [colorScheme]);
+
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: "tomato",
         tabBarStyle: {
-          backgroundColor: "transparent",
+          backgroundColor: theme.bgContent,
           borderTopColor: "transparent",
-          display: "none",
         },
         headerShown: false,
       }}
@@ -34,10 +34,16 @@ export default function TabLayout() {
           key={name}
           name={name}
           options={{
-            tabBarLabel: label,
-            tabBarLabelStyle: null,
+            tabBarLabel: () => undefined,
             tabBarIcon: ({ focused }) => (
-              <Icon fill={"black"} focused={focused} />
+              <View style={{ paddingTop: 10 }}>
+                <Icon
+                  fill={
+                    focused ? UI.Colors.Primary100 : theme.bgContentSecondary
+                  }
+                  focused={focused}
+                />
+              </View>
             ),
             tabBarButton: visibleHandler(name),
           }}

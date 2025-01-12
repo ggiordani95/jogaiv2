@@ -69,7 +69,7 @@ export enum TextColorPresetsEnum {
 
 const FixedTextColorsPresets = {
   [TextColorPresetsEnum.button]: UI.Colors.Black80,
-  [TextColorPresetsEnum.error]: UI.Colors.Error60,
+  [TextColorPresetsEnum.error]: UI.Colors.Error100,
   [TextColorPresetsEnum.warning]: UI.Colors.Warning60,
   [TextColorPresetsEnum.success]: UI.Colors.Success60,
   [TextColorPresetsEnum.info]: UI.Colors.Info60,

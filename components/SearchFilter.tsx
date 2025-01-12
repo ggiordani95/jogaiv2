@@ -17,6 +17,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { SpacedView } from "./SpacedView";
+import React from "react";
 
 type TSearchFilter = {
   bgColorVariant?: "bgContentPrimary" | "bgContentSecondary";
@@ -54,7 +55,7 @@ export default function SearchFilter({
   };
 
   return (
-    <>
+    <React.Fragment>
       <View style={{ marginTop: SpaceFromTop }} />
       <SpacedView
         onLayout={(event) => {
@@ -106,7 +107,7 @@ export default function SearchFilter({
           </TouchableOpacity>
         )}
       </Animated.View>
-    </>
+    </React.Fragment>
   );
 }
 

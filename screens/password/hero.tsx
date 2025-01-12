@@ -5,14 +5,30 @@ import { Button } from "@/theme/ui/components/Button";
 import { useEffect, useRef, useState } from "react";
 import { TouchableOpacity, useColorScheme } from "react-native";
 import { useRouter } from "expo-router";
+import { useLoginPassword } from "@/hooks/useLoginPassword";
+import { useUserStore } from "@/stores/zustand/auth";
 
 export const PasswordHero = ({ email }: { email: string }) => {
   const [password, setPassword] = useState<string>("");
   const passwordRef = useRef<any>(null);
-
+  const login = useUserStore((state) => state.login);
   const colorScheme = useColorScheme();
 
   const router = useRouter();
+
+  const { refetch, data, isLoading, isError } = useLoginPassword({
+    email,
+    password,
+  });
+
+  const handleLogin = async () => {
+    const result = await refetch();
+    console.log({ result });
+    if (result.isSuccess) {
+      login(result.data);
+      router.replace("/(tabs)");
+    }
+  };
 
   useEffect(() => {
     if (passwordRef.current) {
@@ -23,12 +39,21 @@ export const PasswordHero = ({ email }: { email: string }) => {
   return (
     <View w="100%" gap="xl" flex={14}>
       <View gap="md">
-        <Text
-          preset={"body"}
-          color={"secondary"}
-          family={"primaryRegular"}
-          text={"Parece que você já possui uma conta."}
-        />
+        {isError ? (
+          <Text
+            preset="body"
+            color={"error"}
+            family={"primaryRegular"}
+            text={"Usuário ou senha incorreta(s)."}
+          />
+        ) : (
+          <Text
+            preset={"body"}
+            color={"secondary"}
+            family={"primaryRegular"}
+            text={"Parece que você já possui uma conta."}
+          />
+        )}
         <TextInput
           preset={"disabled"}
           placeholder={"Digite seu email"}
@@ -39,7 +64,8 @@ export const PasswordHero = ({ email }: { email: string }) => {
         <TextInput
           preset={"default"}
           placeholder={"Digite sua senha"}
-          onChangeText={() => ""}
+          onChangeText={(e) => setPassword(e)}
+          password
           ref={passwordRef}
           value={password}
         />
@@ -57,8 +83,8 @@ export const PasswordHero = ({ email }: { email: string }) => {
         </TouchableOpacity>
         <Button
           preset={"primary"}
-          onPress={() => null}
-          isLoading={false}
+          onPress={handleLogin}
+          isLoading={isLoading}
           text={"Continuar"}
         />
       </View>
