@@ -2,7 +2,7 @@ import LottieComponent from "@/components/LottieComponent";
 import { View } from "@/theme/ui/components/View";
 import { Text } from "@/theme/ui/components/Text";
 import { useWindowDimensions } from "react-native";
-import Location from "@/assets/lotties/Location.json";
+import Location from "@/assets/lotties/location.json";
 import useExpoLocation from "@/hooks/useExpoLocation";
 
 export const TemplateOne = ({

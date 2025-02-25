@@ -1,7 +1,7 @@
 import React from "react";
 import { CityOnBoarding, TemplateOne } from "./onboarding.templates";
-import Calendar from "@/assets/lotties/Calendar.json";
-import Protection from "@/assets/lotties/Protection.json";
+import Calendar from "@/assets/lotties/calendar.json";
+import Protection from "@/assets/lotties/protection.json";
 
 export type OnBoardScreensType = {
   name: string;
